@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controllers.CreateFingerprintController">
+    <children>
+        <Label layoutX="960.0" layoutY="356.0" text="Actividades:" />
+        <ComboBox fx:id="activityComboBox" layoutX="960.0" layoutY="386.0" prefWidth="200.0" />
+        <Label layoutX="960.0" layoutY="426.0" text="Valor:" />
+        <TextField fx:id="valueField" layoutX="960.0" layoutY="446.0" prefWidth="200.0" />
+        <Label layoutX="960.0" layoutY="486.0" text="Fecha:" />
+        <DatePicker fx:id="datePicker" layoutX="960.0" layoutY="506.0" prefWidth="200.0" />
+        <Label layoutX="960.0" layoutY="546.0" text="Unidad:" />
+        <TextField fx:id="unitField" editable="false" layoutX="960.0" layoutY="566.0" prefWidth="200.0" />
+        <Button layoutX="960.0" layoutY="606.0" onAction="#registerFingerprint" text="Registrar Huella" />
+    </children>
+</AnchorPane>

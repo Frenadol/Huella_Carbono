@@ -31,6 +31,10 @@ public class Actividad {
     @OneToMany(mappedBy = "idActividad")
     private List<Huella> huellas =  new ArrayList<>();
 
+    public Actividad() {
+
+    }
+
     public Integer getId() {
         return id;
     }
@@ -71,4 +75,18 @@ public class Actividad {
         this.huellas = huellas;
     }
 
+    public Actividad(Integer id, String nombre, Categoria idCategoria, List<Huella> huellas) {
+        this.id = id;
+        this.nombre = nombre;
+        this.idCategoria = idCategoria;
+        this.huellas = huellas;
+    }
+
+    @Override
+    public String toString() {
+        return "Actividad{" +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                '}';
+    }
 }
