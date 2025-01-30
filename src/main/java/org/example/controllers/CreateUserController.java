@@ -80,4 +80,12 @@ public class CreateUserController {
         alert.setContentText(message);
         alert.show();
     }
+    @FXML
+    public void goToFirstMenu(){
+        try {
+            App.setRoot("FirstMenu");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
