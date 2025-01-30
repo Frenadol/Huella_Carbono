@@ -5,12 +5,14 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Alert;
+import org.example.App;
 import org.example.dao.ActivityDao;
 import org.example.dao.FingerPrintDao;
 import org.example.entities.Actividad;
 import org.example.entities.Huella;
 import org.example.utils.Session;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
@@ -37,24 +39,14 @@ public class CreateFingerprintController {
 
     private void loadActivities() {
         ActivityDao activityDao = new ActivityDao();
-        List<Actividad> activities = activityDao.findAll();
+        List<Actividad> activities = activityDao.findAllWithCategories();
         activityComboBox.getItems().addAll(activities);
     }
 
     private void updateUnitField() {
         Actividad selectedActivity = activityComboBox.getValue();
-        if (selectedActivity != null) {
-            switch (selectedActivity.getNombre().toLowerCase()) {
-                case "transporte":
-                    unitField.setText("km");
-                    break;
-                case "electricidad":
-                    unitField.setText("kWh");
-                    break;
-                default:
-                    unitField.setText("unidad");
-                    break;
-            }
+        if (selectedActivity != null && selectedActivity.getIdCategoria() != null) {
+            unitField.setText(selectedActivity.getIdCategoria().getUnidad());
         }
     }
 
@@ -78,7 +70,7 @@ public class CreateFingerprintController {
         huella.setUnidad(unit);
 
         FingerPrintDao fingerprintDao = new FingerPrintDao();
-        fingerprintDao.save(huella);
+        fingerprintDao.saveFingerPrint(huella);
 
         showAlert("Éxito", "Huella registrada correctamente.");
     }
@@ -89,5 +81,9 @@ public class CreateFingerprintController {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+    @FXML
+        public void goToMainMenu() throws IOException {
+        App.setRoot("MainMenu");
     }
 }

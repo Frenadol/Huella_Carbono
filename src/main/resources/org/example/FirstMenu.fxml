@@ -7,23 +7,23 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controllers.FirstMenuController">
     <children>
-        <Text layoutX="891.0" layoutY="403.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Bienvenido" textAlignment="CENTER" wrappingWidth="241.5999755859375">
+        <Text layoutX="839.0" layoutY="415.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Bienvenido" textAlignment="CENTER" wrappingWidth="241.5999755859375">
             <font>
                 <Font name="System Bold" size="24.0" />
             </font>
-            <AnchorPane.topAnchor>377.1015625</AnchorPane.topAnchor>
-            <AnchorPane.leftAnchor>891.0</AnchorPane.leftAnchor>
-            <AnchorPane.rightAnchor>787.4000244140625</AnchorPane.rightAnchor>
+            <AnchorPane.topAnchor>389.1015625</AnchorPane.topAnchor>
+            <AnchorPane.leftAnchor>839.0</AnchorPane.leftAnchor>
+            <AnchorPane.rightAnchor>839.4000244140625</AnchorPane.rightAnchor>
         </Text>
-        <Button layoutX="815.0" layoutY="442.0" mnemonicParsing="false" onAction="#goToLogin" prefHeight="26.0" prefWidth="394.0" text="Iniciar Sesión">
-            <AnchorPane.topAnchor>442.0</AnchorPane.topAnchor>
-            <AnchorPane.leftAnchor>815.0</AnchorPane.leftAnchor>
-            <AnchorPane.rightAnchor>711.4000000000001</AnchorPane.rightAnchor>
+        <Button layoutX="763.0" layoutY="456.0" mnemonicParsing="false" onAction="#goToLogin" prefHeight="26.0" prefWidth="394.0" text="Iniciar Sesión">
+            <AnchorPane.topAnchor>456.0</AnchorPane.topAnchor>
+            <AnchorPane.leftAnchor>763.0</AnchorPane.leftAnchor>
+            <AnchorPane.rightAnchor>763.4000000000001</AnchorPane.rightAnchor>
         </Button>
-        <Button layoutX="814.0" layoutY="494.0" mnemonicParsing="false" onAction="#goToRegister" prefHeight="26.0" prefWidth="394.0" text="Registrarse">
-            <AnchorPane.topAnchor>494.0</AnchorPane.topAnchor>
-            <AnchorPane.leftAnchor>814.0</AnchorPane.leftAnchor>
-            <AnchorPane.rightAnchor>712.4000000000001</AnchorPane.rightAnchor>
+        <Button layoutX="763.0" layoutY="513.0" mnemonicParsing="false" onAction="#goToRegister" prefHeight="26.0" prefWidth="394.0" text="Registrarse">
+            <AnchorPane.topAnchor>513.0</AnchorPane.topAnchor>
+            <AnchorPane.leftAnchor>763.0</AnchorPane.leftAnchor>
+            <AnchorPane.rightAnchor>764.2</AnchorPane.rightAnchor>
         </Button>
     </children>
 </AnchorPane>

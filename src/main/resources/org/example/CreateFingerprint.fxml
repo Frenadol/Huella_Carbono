@@ -17,6 +17,7 @@
         <DatePicker fx:id="datePicker" layoutX="960.0" layoutY="506.0" prefWidth="200.0" />
         <Label layoutX="960.0" layoutY="546.0" text="Unidad:" />
         <TextField fx:id="unitField" editable="false" layoutX="960.0" layoutY="566.0" prefWidth="200.0" />
-        <Button layoutX="960.0" layoutY="606.0" onAction="#registerFingerprint" text="Registrar Huella" />
+        <Button layoutX="923.0" layoutY="606.0" onAction="#registerFingerprint" text="Registrar Huella" />
+      <Button layoutX="1060.0" layoutY="606.0" mnemonicParsing="false" onMouseClicked="#goToMainMenu" text="Volver al menu anterior" />
     </children>
 </AnchorPane>

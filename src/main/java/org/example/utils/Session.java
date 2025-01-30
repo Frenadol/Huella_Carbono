@@ -27,7 +27,9 @@ public class Session {
     public Usuario getUserLogged(){
         return userLogged;
     }
-
+    public int getUserId(){
+        return userLogged.getId();
+    }
     public void logOut(){
         userLogged=null;
     }
