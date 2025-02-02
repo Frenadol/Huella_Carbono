@@ -1,3 +1,4 @@
+// src/main/java/org/example/controllers/CreateHabitController.java
 package org.example.controllers;
 
 import javafx.fxml.FXML;
@@ -6,15 +7,16 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Alert;
 import org.example.App;
 import org.example.dao.ActivityDao;
-import org.example.dao.HabitDao;
 import org.example.entities.Actividad;
 import org.example.entities.Habito;
 import org.example.entities.HabitoId;
 import org.example.entities.Usuario;
+import org.example.services.HabitService;
 import org.example.utils.Session;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class CreateHabitController {
@@ -30,6 +32,12 @@ public class CreateHabitController {
 
     @FXML
     private DatePicker startDatePicker;
+
+    private HabitService habitService;
+
+    public CreateHabitController() {
+        this.habitService = new HabitService();
+    }
 
     @FXML
     public void initialize() {
@@ -53,6 +61,7 @@ public class CreateHabitController {
     private void loadTypeOptions() {
         typeComboBox.getItems().addAll("Diariamente", "Semanalmente", "Mensualmente", "Anualmente");
     }
+
     @FXML
     private void registerHabit() {
         Actividad selectedActivity = activityComboBox.getValue();
@@ -82,13 +91,13 @@ public class CreateHabitController {
 
         newHabito.setFrecuencia(String.valueOf(frequency));
         newHabito.setTipo(type);
-        newHabito.setUltimaFecha(startDate);
+        newHabito.setUltimaFecha(LocalDateTime.now());
 
-        HabitDao habitDao = new HabitDao();
-        habitDao.createHabit(newHabito);
-
-        showAlert("Éxito", "Hábito registrado correctamente.");
+        if (habitService.insertHabit(newHabito)) {
+            showAlert("Éxito", "Hábito registrado correctamente.");
+        }
     }
+
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);

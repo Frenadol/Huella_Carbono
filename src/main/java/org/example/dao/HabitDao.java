@@ -14,4 +14,13 @@ public class HabitDao {
             session.getTransaction().commit();
         }
     }
+    public boolean exists(HabitoId habitoId) {
+        Session session = Connection.getInstance().getSession();
+        try {
+            Habito habito = session.get(Habito.class, habitoId);
+            return habito != null;
+        } finally {
+            session.close();
+        }
+    }
 }

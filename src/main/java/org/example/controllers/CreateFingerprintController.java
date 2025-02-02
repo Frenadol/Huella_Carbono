@@ -15,6 +15,7 @@ import org.example.utils.Session;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class CreateFingerprintController {
@@ -52,27 +53,33 @@ public class CreateFingerprintController {
 
     @FXML
     private void registerFingerprint() {
-        Actividad selectedActivity = activityComboBox.getValue();
-        String value = valueField.getText();
-        LocalDate date = datePicker.getValue();
-        String unit = unitField.getText();
+        try {
+            Actividad selectedActivity = activityComboBox.getValue();
+            String value = valueField.getText();
+            LocalDate date = datePicker.getValue();
+            String unit = unitField.getText();
 
-        if (selectedActivity == null || value.isEmpty() || date == null || unit.isEmpty()) {
-            showAlert("Error", "Todos los campos son obligatorios.");
-            return;
+            if (selectedActivity == null || value.isEmpty() || date == null || unit.isEmpty()) {
+                showAlert("Error", "Todos los campos son obligatorios.");
+                return;
+            }
+
+            Huella huella = new Huella();
+            huella.setIdUsuario(Session.getInstance().getUserLogged());
+            huella.setIdActividad(selectedActivity);
+            huella.setValor(BigDecimal.valueOf(Double.parseDouble(value)));
+            huella.setFecha(LocalDateTime.now());
+            huella.setUnidad(unit);
+
+            FingerPrintDao fingerprintDao = new FingerPrintDao();
+            fingerprintDao.saveFingerPrint(huella);
+
+            showAlert("Éxito", "Huella registrada correctamente.");
+        } catch (NumberFormatException e) {
+            showAlert("Error", "El valor debe ser un número válido.");
+        } catch (Exception e) {
+            showAlert("Error", "Ocurrió un error al registrar la huella: " + e.getMessage());
         }
-
-        Huella huella = new Huella();
-        huella.setIdUsuario(Session.getInstance().getUserLogged());
-        huella.setIdActividad(selectedActivity);
-        huella.setValor(BigDecimal.valueOf(Double.parseDouble(value)));
-        huella.setFecha(LocalDate.now());
-        huella.setUnidad(unit);
-
-        FingerPrintDao fingerprintDao = new FingerPrintDao();
-        fingerprintDao.saveFingerPrint(huella);
-
-        showAlert("Éxito", "Huella registrada correctamente.");
     }
 
     private void showAlert(String title, String message) {

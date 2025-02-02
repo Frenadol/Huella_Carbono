@@ -4,18 +4,27 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controllers.MainMenuController">
    <children>
-      <TableView fx:id="fingerprintTable" layoutX="1164.0" layoutY="430.0" prefHeight="400.0" prefWidth="475.0">
+      <Button layoutX="1057.0" layoutY="631.0" onMouseClicked="#createHabit" prefHeight="66.0" prefWidth="133.0" text="Crear Nuevo Hábito" />
+      <TableView fx:id="fingerprintTable" layoutX="1206.0" layoutY="372.0" prefHeight="377.0" prefWidth="510.0">
          <columns>
-            <TableColumn fx:id="activityColumn" text="Actividad" />
-            <TableColumn fx:id="valueColumn" text="Valor" />
-            <TableColumn fx:id="dateColumn" prefWidth="92.7999267578125" text="Fecha" />
-            <TableColumn fx:id="unitColumn" prefWidth="221.5999755859375" text="Unidad" />
+            <TableColumn fx:id="activityColumn" prefWidth="128.800048828125" text="Actividad" />
+            <TableColumn fx:id="valueColumn" prefWidth="128.800048828125" text="Valor" />
+            <TableColumn fx:id="dateColumn" prefWidth="121.5999755859375" text="Fecha" />
+            <TableColumn fx:id="unitColumn" prefWidth="130.39990234375" text="Unidad" />
          </columns>
       </TableView>
-      <Button layoutX="982.0" layoutY="570.0" onAction="#createFingerPrint" text="Registrar Huella" />
-      <Button layoutX="971.0" layoutY="697.0" onMouseClicked="#createHabit" text="Crear Nuevo Hábito" />
+      <Button layoutX="1056.0" layoutY="551.0" onAction="#createFingerPrint" prefHeight="51.0" prefWidth="134.0" text="Registrar Huella" />
+      <Text fill="#38c749" layoutX="1074.0" layoutY="534.0" strokeType="OUTSIDE" strokeWidth="0.0" text="HUELLAS">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Text>
+      <Text layoutX="867.0" layoutY="529.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Impacto medioambiental" wrappingWidth="134.4000000000001" />
+      <Button layoutX="837.0" layoutY="561.0" mnemonicParsing="false" onMouseClicked="#showImpactCalculationDialog" text="Calcular impacto Medioambiental" />
    </children>
 </AnchorPane>

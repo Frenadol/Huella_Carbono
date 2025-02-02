@@ -12,7 +12,7 @@ public class Connection {
         sessionFactory = new Configuration().configure().buildSessionFactory();
     }
 
-    public static synchronized Connection getInstance() {
+    public static  Connection getInstance() {
         if (instance == null) {
             instance = new Connection();
         }

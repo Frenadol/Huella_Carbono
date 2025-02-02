@@ -51,13 +51,13 @@ public class CreateUserController {
         newUser.setEmail(email);
         newUser.setFechaRegistro(LocalDate.now());
 
-        if (!userService.userExists(email)) {
+        if (userService.userExists(email) == null) {
             userService.checkAndInsertNewUser(newUser);
             showAlert("Usuario registrado exitosamente.");
 
         } else {
             showAlert("El usuario ya existe.");
-            App.setRoot("loginUser");
+
         }
     }
 
