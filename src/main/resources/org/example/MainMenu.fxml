@@ -26,5 +26,6 @@
       </Text>
       <Text layoutX="867.0" layoutY="529.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Impacto medioambiental" wrappingWidth="134.4000000000001" />
       <Button layoutX="837.0" layoutY="561.0" mnemonicParsing="false" onMouseClicked="#showImpactCalculationDialog" text="Calcular impacto Medioambiental" />
+      <Button layoutX="848.0" layoutY="651.0" mnemonicParsing="false" onMouseClicked="#showRecommendationsDialog" prefHeight="51.0" prefWidth="177.0" text="Ver mis recomendaciones" />
    </children>
 </AnchorPane>
