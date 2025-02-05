@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="org.example.controllers.ModifyFingerprintsDialogController">
+    <children>
+        <Label layoutX="14.0" layoutY="14.0" text="Activity:" />
+        <ComboBox fx:id="activityComboBox" layoutX="100.0" layoutY="10.0" prefWidth="200.0" />
+
+        <Label layoutX="14.0" layoutY="54.0" text="Value:" />
+        <TextField fx:id="valueField" layoutX="100.0" layoutY="50.0" prefWidth="200.0" />
+
+        <Label layoutX="14.0" layoutY="94.0" text="Date:" />
+        <DatePicker fx:id="datePicker" layoutX="100.0" layoutY="90.0" prefWidth="200.0" />
+
+        <Button layoutX="100.0" layoutY="140.0" mnemonicParsing="false" onAction="#saveChanges" text="Save" />
+        <Button layoutX="200.0" layoutY="140.0" mnemonicParsing="false" onAction="#closeDialog" text="Cancel" />
+    </children>
+</AnchorPane>

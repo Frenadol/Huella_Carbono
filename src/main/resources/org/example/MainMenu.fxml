@@ -74,5 +74,10 @@
             <Font name="Britannic Bold" size="11.0" />
          </font>
       </Button>
+      <Button layoutX="1240.0" layoutY="291.0" mnemonicParsing="false" onMouseClicked="#modifyFingerprint" prefHeight="66.0" prefWidth="223.0" text="Modificar datos de huella" textAlignment="CENTER">
+         <font>
+            <Font name="Britannic Bold" size="11.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>
