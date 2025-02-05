@@ -1,4 +1,3 @@
-// src/main/java/org/example/dao/RecommendationDao.java
 package org.example.dao;
 
 import org.example.entities.Recomendacion;

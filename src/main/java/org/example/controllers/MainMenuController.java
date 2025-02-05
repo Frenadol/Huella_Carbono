@@ -1,6 +1,6 @@
-// src/main/java/org/example/controllers/MainMenuController.java
 package org.example.controllers;
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -9,14 +9,15 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.example.App;
-import org.example.dao.FingerPrintDao;
-import org.example.dao.RecommendationDao;
+import org.example.entities.Categoria;
+import org.example.entities.Habito;
 import org.example.entities.Huella;
-import org.example.entities.Recomendacion;
+import org.example.services.FingerprintService;
+import org.example.services.HabitService;
 import org.example.utils.AlertsUtils;
-import org.example.utils.PDFUtils;
 import org.example.utils.Session;
 
 import java.io.IOException;
@@ -43,10 +44,22 @@ public class MainMenuController {
     private TableColumn<Huella, String> unitColumn;
 
     @FXML
-    private TableView<Recomendacion> recommendationTable;
+    private TableView<Habito> habitTable;
 
     @FXML
-    private TableColumn<Recomendacion, String> recommendationColumn;
+    private TableColumn<Habito, String> habitActivityNameColumn;
+
+    @FXML
+    private TableColumn<Habito, String> habitFrecuenciaColumn;
+
+    @FXML
+    private TableColumn<Habito, String> habitTipoColumn;
+
+    @FXML
+    private TableColumn<Habito, String> habitUltimaFechaColumn;
+
+    private final FingerprintService fingerprintService = new FingerprintService();
+    private final HabitService habitService = new HabitService();
 
     @FXML
     public void initialize() {
@@ -54,48 +67,81 @@ public class MainMenuController {
         valueColumn.setCellValueFactory(new PropertyValueFactory<>("valor"));
         dateColumn.setCellValueFactory(new PropertyValueFactory<>("fecha"));
         unitColumn.setCellValueFactory(new PropertyValueFactory<>("unidad"));
+        habitActivityNameColumn.setCellValueFactory(cellData -> {
+            Habito habito = cellData.getValue();
+            String activityName = habito.getIdActividad() != null ? habito.getIdActividad().getNombre() : null;
+            return new SimpleStringProperty(activityName);
+        });
+        habitFrecuenciaColumn.setCellValueFactory(new PropertyValueFactory<>("frecuencia"));
+        habitTipoColumn.setCellValueFactory(new PropertyValueFactory<>("tipo"));
+        habitUltimaFechaColumn.setCellValueFactory(new PropertyValueFactory<>("ultimaFecha"));
         loadFingerprints();
+        loadHabits();
     }
 
     private void loadFingerprints() {
-        FingerPrintDao fingerprintDao = new FingerPrintDao();
-        List<Huella> fingerprints = fingerprintDao.viewFingerPrints(Session.getInstance().getUserLogged());
-        ObservableList<Huella> fingerprintList = FXCollections.observableArrayList(fingerprints);
-        fingerprintTable.setItems(fingerprintList);
+        List<Huella> fingerprints = fingerprintService.viewFingerPrints(Session.getInstance().getUserLogged());
+        if (fingerprints != null) {
+            ObservableList<Huella> fingerprintList = FXCollections.observableArrayList(fingerprints);
+            fingerprintTable.setItems(fingerprintList);
+        }
     }
 
-    private void loadRecommendations() {
-        RecommendationDao recommendationDao = new RecommendationDao();
-        List<Recomendacion> recommendations = recommendationDao.getRecommendationsByUserId(Session.getInstance().getUserLogged().getId());
-        ObservableList<Recomendacion> recommendationList = FXCollections.observableArrayList(recommendations);
-        recommendationTable.setItems(recommendationList);
+    private void loadHabits() {
+        List<Habito> habits = habitService.getHabitsByUser(Session.getInstance().getUserLogged());
+        if (habits != null) {
+            ObservableList<Habito> habitList = FXCollections.observableArrayList(habits);
+            habitTable.setItems(habitList);
+        }
+    }
+
+    private void showOperationSelectionDialog() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Seleccionar Operación");
+        alert.setHeaderText("Elija una operación");
+        alert.setContentText("Seleccione la operación que desea realizar:");
+
+        ButtonType buttonTypeAll = new ButtonType("Calcular impacto de todas las huellas");
+        ButtonType buttonTypeCategory = new ButtonType("Calcular por categoría");
+        ButtonType buttonTypeSelect = new ButtonType("Elegir huellas específicas");
+        ButtonType buttonTypeCancel = new ButtonType("Cancelar", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+        alert.getButtonTypes().setAll(buttonTypeAll, buttonTypeCategory, buttonTypeSelect, buttonTypeCancel);
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent()) {
+            if (result.get() == buttonTypeAll) {
+                calculateImpactForAllFootprints();
+            } else if (result.get() == buttonTypeCategory) {
+                showCategorySelectionDialog();
+            } else if (result.get() == buttonTypeSelect) {
+                showSelectFingerprintsDialog();
+            }
+        }
     }
 
     @FXML
     public void showImpactCalculationDialog() {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Calculo del Impacto Ambiental");
-        alert.setHeaderText("Elija una opción");
-        alert.setContentText("Quieres calcularlo con toda tus categorias o elegir una?");
+        showOperationSelectionDialog();
+    }
 
-        ButtonType buttonTypeAll = new ButtonType("Todas las huellas");
-        ButtonType buttonTypeCategory = new ButtonType("Por categoría");
-        ButtonType buttonTypeCancel = new ButtonType("Cancelar", ButtonBar.ButtonData.CANCEL_CLOSE);
-
-        alert.getButtonTypes().setAll(buttonTypeAll, buttonTypeCategory, buttonTypeCancel);
-
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.isPresent() && result.get() == buttonTypeAll) {
-            calculateImpactForAllFootprints();
-        } else if (result.isPresent() && result.get() == buttonTypeCategory) {
-            // Implement category-specific calculation if needed
+    private void showSelectFingerprintsDialog() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("SelectFingerprintsDialog.fxml"));
+            Parent parent = fxmlLoader.load();
+            Scene scene = new Scene(parent);
+            Stage stage = new Stage();
+            stage.setTitle("Seleccionar Huellas");
+            stage.setScene(scene);
+            stage.showAndWait();
+        } catch (IOException e) {
+            AlertsUtils.showErrorAlert("Error", "Hubo un error al cargar el diálogo de selección de huellas: " + e.getMessage());
         }
     }
 
     private void calculateImpactForAllFootprints() {
         try {
-            FingerPrintDao fingerprintDao = new FingerPrintDao();
-            List<Huella> huellas = fingerprintDao.viewFingerPrints(Session.getInstance().getUserLogged());
+            List<Huella> huellas = fingerprintService.viewFingerPrints(Session.getInstance().getUserLogged());
             BigDecimal totalImpact = BigDecimal.ZERO;
 
             for (Huella huella : huellas) {
@@ -108,6 +154,38 @@ public class MainMenuController {
             AlertsUtils.showAlert("Impacto total medioambiental", "El impacto medioambiental producido es: " + totalImpact.toString() + "KG de CO2");
         } catch (Exception e) {
             AlertsUtils.showErrorAlert("Error", "Hubo un error al calcular el impacto medioambiental: " + e.getMessage());
+        }
+    }
+
+    private void showCategorySelectionDialog() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("CategorySelectionDialog.fxml"));
+            Parent parent = fxmlLoader.load();
+            Scene scene = new Scene(parent);
+            Stage stage = new Stage();
+            stage.setTitle("Seleccionar Categoría");
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            AlertsUtils.showErrorAlert("Error", "Hubo un error al cargar el diálogo de selección de categoría: " + e.getMessage());
+        }
+    }
+
+    public void calculateImpactForCategory(Categoria category) {
+        try {
+            List<Huella> huellas = fingerprintService.viewFingerPrintsByCategory(Session.getInstance().getUserLogged(), category);
+            BigDecimal totalImpact = BigDecimal.ZERO;
+
+            for (Huella huella : huellas) {
+                BigDecimal factorEmision = BigDecimal.valueOf(huella.getIdActividad().getIdCategoria().getFactorEmision());
+                BigDecimal impacto = huella.getValor().multiply(factorEmision);
+                totalImpact = totalImpact.add(impacto);
+            }
+
+            totalImpact = totalImpact.setScale(2, RoundingMode.HALF_UP);
+            AlertsUtils.showAlert("Impacto medioambiental por categoría", "El impacto medioambiental producido es: " + totalImpact.toString() + "KG de CO2");
+        } catch (Exception e) {
+            AlertsUtils.showErrorAlert("Error", "Hubo un error al calcular el impacto medioambiental por categoría: " + e.getMessage());
         }
     }
 
@@ -125,19 +203,29 @@ public class MainMenuController {
             AlertsUtils.showErrorAlert("Error", "Hubo un error al cargar el diálogo de recomendaciones: " + e.getMessage());
         }
     }
-    private void generateRecommendationsPdf() {
+    @FXML
+    public void showAdvancedImpactCalculationDialog() {
         try {
-            RecommendationDao recommendationDao = new RecommendationDao();
-            List<Recomendacion> recommendations = recommendationDao.getRecommendationsByUserId(Session.getInstance().getUserLogged().getId());
-            PDFUtils.generateRecommendationsPdf(recommendations);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/ImpactCalculationDialog.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Calcular Impacto Medioambiental");
+            stage.setScene(new Scene(root));
+            stage.showAndWait();
         } catch (Exception e) {
-            AlertsUtils.showErrorAlert("Error", "Hubo un error al generar el PDF: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
     @FXML
     public void createFingerPrint() throws IOException {
         App.setRoot("CreateFingerPrint");
+    }
+
+    @FXML
+    public void modifyHabit() throws IOException {
+        App.setRoot("ModifyHabits");
     }
 
     @FXML

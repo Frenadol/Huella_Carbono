@@ -1,17 +1,16 @@
-// src/main/java/org/example/controllers/CreateHabitController.java
 package org.example.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.Alert;
 import org.example.App;
-import org.example.dao.ActivityDao;
 import org.example.entities.Actividad;
 import org.example.entities.Habito;
 import org.example.entities.HabitoId;
 import org.example.entities.Usuario;
+import org.example.services.ActivityService;
 import org.example.services.HabitService;
+import org.example.utils.AlertsUtils;
 import org.example.utils.Session;
 
 import java.io.IOException;
@@ -33,10 +32,12 @@ public class CreateHabitController {
     @FXML
     private DatePicker startDatePicker;
 
-    private HabitService habitService;
+    private final HabitService habitService;
+    private final ActivityService activityService;
 
     public CreateHabitController() {
         this.habitService = new HabitService();
+        this.activityService = new ActivityService();
     }
 
     @FXML
@@ -47,9 +48,10 @@ public class CreateHabitController {
     }
 
     private void loadActivities() {
-        ActivityDao activityDao = new ActivityDao();
-        List<Actividad> activities = activityDao.findAllWithCategories();
-        activityComboBox.getItems().addAll(activities);
+        List<Actividad> activities = activityService.findAllWithCategories();
+        if (activities != null) {
+            activityComboBox.getItems().addAll(activities);
+        }
     }
 
     private void loadFrequencyOptions() {
@@ -99,11 +101,7 @@ public class CreateHabitController {
     }
 
     private void showAlert(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
+        AlertsUtils.showAlert(title, message);
     }
 
     @FXML

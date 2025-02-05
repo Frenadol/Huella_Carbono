@@ -4,12 +4,12 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.Alert;
 import org.example.App;
-import org.example.dao.ActivityDao;
-import org.example.dao.FingerPrintDao;
 import org.example.entities.Actividad;
 import org.example.entities.Huella;
+import org.example.services.ActivityService;
+import org.example.services.FingerprintService;
+import org.example.utils.AlertsUtils;
 import org.example.utils.Session;
 
 import java.io.IOException;
@@ -32,6 +32,9 @@ public class CreateFingerprintController {
     @FXML
     private TextField unitField;
 
+    private final FingerprintService fingerprintService = new FingerprintService();
+    private final ActivityService activityService = new ActivityService();
+
     @FXML
     public void initialize() {
         loadActivities();
@@ -39,9 +42,10 @@ public class CreateFingerprintController {
     }
 
     private void loadActivities() {
-        ActivityDao activityDao = new ActivityDao();
-        List<Actividad> activities = activityDao.findAllWithCategories();
-        activityComboBox.getItems().addAll(activities);
+        List<Actividad> activities = activityService.findAllWithCategories();
+        if (activities != null) {
+            activityComboBox.getItems().addAll(activities);
+        }
     }
 
     private void updateUnitField() {
@@ -60,7 +64,7 @@ public class CreateFingerprintController {
             String unit = unitField.getText();
 
             if (selectedActivity == null || value.isEmpty() || date == null || unit.isEmpty()) {
-                showAlert("Error", "Todos los campos son obligatorios.");
+                AlertsUtils.showErrorAlert("Error", "Todos los campos son obligatorios.");
                 return;
             }
 
@@ -71,26 +75,16 @@ public class CreateFingerprintController {
             huella.setFecha(LocalDateTime.now());
             huella.setUnidad(unit);
 
-            FingerPrintDao fingerprintDao = new FingerPrintDao();
-            fingerprintDao.saveFingerPrint(huella);
-
-            showAlert("Éxito", "Huella registrada correctamente.");
+            fingerprintService.saveFingerprint(huella);
         } catch (NumberFormatException e) {
-            showAlert("Error", "El valor debe ser un número válido.");
+            AlertsUtils.showErrorAlert("Error", "El valor debe ser un número válido.");
         } catch (Exception e) {
-            showAlert("Error", "Ocurrió un error al registrar la huella: " + e.getMessage());
+            AlertsUtils.showErrorAlert("Error", "Ocurrió un error al registrar la huella: " + e.getMessage());
         }
     }
 
-    private void showAlert(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
     @FXML
-        public void goToMainMenu() throws IOException {
+    public void goToMainMenu() throws IOException {
         App.setRoot("MainMenu");
     }
 }

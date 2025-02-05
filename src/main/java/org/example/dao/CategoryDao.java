@@ -13,4 +13,8 @@ public class CategoryDao {
         List<Categoria> categories=findAllActivities.list();
         return categories;
     }
+
+    public static CategoryDao build() {
+        return new CategoryDao();
+    }
 }
