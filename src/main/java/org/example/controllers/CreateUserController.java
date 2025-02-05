@@ -1,12 +1,12 @@
 package org.example.controllers;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import org.example.App;
 import org.example.entities.Usuario;
 import org.example.services.UserService;
+import org.example.utils.AlertsUtils;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -34,14 +34,12 @@ public class CreateUserController {
         String email = textEmail.getText();
 
         if (username.isEmpty() || password.isEmpty() || email.isEmpty()) {
-            String message = "Por favor, complete todos los campos.";
-            showAlert(message);
+            AlertsUtils.showErrorAlert("Error", "Por favor, complete todos los campos.");
             return;
         }
 
         if (!isValidEmail(email)) {
-            String message = "El correo electrónico no tiene un formato válido.";
-            showAlert(message);
+            AlertsUtils.showErrorAlert("Error", "El correo electrónico no tiene un formato válido.");
             return;
         }
 
@@ -53,11 +51,9 @@ public class CreateUserController {
 
         if (userService.userExists(email) == null) {
             userService.checkAndInsertNewUser(newUser);
-            showAlert("Usuario registrado exitosamente.");
-
+            AlertsUtils.showAlert("Éxito", "Usuario registrado exitosamente.");
         } else {
-            showAlert("El usuario ya existe.");
-
+            AlertsUtils.showErrorAlert("Error", "El usuario ya existe.");
         }
     }
 
@@ -69,23 +65,5 @@ public class CreateUserController {
     private boolean isValidEmail(String email) {
         String emailRegex = "^[\\w-\\.]+@[\\w-\\.]+\\.[a-z]{2,}$";
         return Pattern.matches(emailRegex, email);
-    }
-
-    /**
-     * Shows an alert with the given message.
-     * @param message The message to display in the alert.
-     */
-    private void showAlert(String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setContentText(message);
-        alert.show();
-    }
-    @FXML
-    public void goToFirstMenu(){
-        try {
-            App.setRoot("FirstMenu");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }

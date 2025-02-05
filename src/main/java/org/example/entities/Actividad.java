@@ -84,8 +84,7 @@ public class Actividad {
 
     @Override
     public String toString() {
-        return "Actividad{" +
-                ", nombre='" + nombre + '\'' +
+        return nombre + '\'' +
                 '}';
     }
 }

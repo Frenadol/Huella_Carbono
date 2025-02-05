@@ -77,4 +77,8 @@ public class Categoria {
         this.recomendaciones = recomendaciones;
     }
 
+    @Override
+    public String toString() {
+        return ""+ nombre;
+    }
 }

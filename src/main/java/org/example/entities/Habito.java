@@ -14,13 +14,13 @@ public class Habito {
     private HabitoId id;
 
     @MapsId("idUsuario")
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "id_usuario", nullable = false)
     private Usuario idUsuario;
 
     @MapsId("idActividad")
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "id_actividad", nullable = false)
     private Actividad idActividad;
@@ -82,4 +82,13 @@ public class Habito {
         this.ultimaFecha = ultimaFecha;
     }
 
+    @Override
+    public String toString() {
+        return "Habito{" +
+                "actividad=" + idActividad.getNombre() +
+                ", frecuencia='" + frecuencia + '\'' +
+                ", tipo='" + tipo + '\'' +
+                ", ultimaFecha=" + ultimaFecha +
+                '}';
+    }
 }
