@@ -218,6 +218,8 @@ public class MainMenuController {
         }
     }
 
+
+
     @FXML
     public void createFingerPrint() throws IOException {
         App.setRoot("CreateFingerPrint");
@@ -231,5 +233,26 @@ public class MainMenuController {
     @FXML
     public void createHabit() throws IOException {
         App.setRoot("CreateHabit");
+    }
+    @FXML
+    public void modifyFingerprint() {
+        Huella fingerprint = fingerprintTable.getSelectionModel().getSelectedItem();
+        if (fingerprint != null) {
+            try {
+                FXMLLoader loader = new FXMLLoader(App.class.getResource("ModifyFingerprintDialog.fxml"));
+                Parent parent = loader.load();
+                ModifyFingerprintsDialogController controller = loader.getController();
+                controller.setFingerprint(fingerprint);
+                Stage stage = new Stage();
+                stage.setTitle("Modify Fingerprint");
+                stage.setScene(new Scene(parent));
+                stage.showAndWait();
+                loadFingerprints();
+            } catch (IOException e) {
+                AlertsUtils.showErrorAlert("Error", "Failed to load modify fingerprint dialog: " + e.getMessage());
+            }
+        } else {
+            AlertsUtils.showErrorAlert("Error", "No fingerprint selected.");
+        }
     }
 }
