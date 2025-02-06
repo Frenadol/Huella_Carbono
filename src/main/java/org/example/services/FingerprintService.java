@@ -10,6 +10,8 @@ import org.example.utils.Connection;
 import org.example.utils.Session;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class FingerprintService {
@@ -50,15 +52,13 @@ public class FingerprintService {
         FingerPrintDao.build().deleteFingerPrint(huella);
     }
 
-    public void updateFingerPrint(Huella huella) {
-        FingerPrintDao.build().updateFingerPrint(huella);
-    }
-    public void updateFingerPrintDetails(Huella huella, Actividad nuevaActividad, BigDecimal nuevoValor, String nuevaUnidad) {
+    public void updateFingerPrintDetails(Huella huella, Actividad nuevaActividad, BigDecimal nuevoValor, String nuevaUnidad, LocalDateTime nuevaFecha) {
         try (org.hibernate.Session session = Connection.getInstance().getSession()) {
             session.beginTransaction();
             huella.setIdActividad(nuevaActividad);
             huella.setValor(nuevoValor);
             huella.setUnidad(nuevaUnidad);
+            huella.setFecha(nuevaFecha);
             session.update(huella);
             session.getTransaction().commit();
         }

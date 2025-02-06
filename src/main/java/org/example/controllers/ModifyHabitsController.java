@@ -57,7 +57,7 @@ public class ModifyHabitsController {
             habitService.deleteHabit(habit);
             loadHabits();
         } else {
-            AlertsUtils.showErrorAlert("Error", "No habit selected.");
+            AlertsUtils.showErrorAlert("Error", "Ningún hábito seleccionado.");
         }
     }
 

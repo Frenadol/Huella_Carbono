@@ -10,10 +10,10 @@ import org.example.entities.Actividad;
 import org.example.entities.Huella;
 import org.example.services.FingerprintService;
 import org.example.services.ActivityService;
-import org.example.utils.AlertsUtils;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class ModifyFingerprintsDialogController {
@@ -24,15 +24,15 @@ public class ModifyFingerprintsDialogController {
     @FXML
     private DatePicker datePicker;
 
-    private Huella fingerprint;
+    private Huella selectedFingerPrint;
     private final FingerprintService fingerprintService = new FingerprintService();
     private final ActivityService activityService = new ActivityService();
 
-    public void setFingerprint(Huella fingerprint) {
-        this.fingerprint = fingerprint;
-        activityComboBox.setValue(fingerprint.getIdActividad());
-        valueField.setText(fingerprint.getValor().toString());
-        datePicker.setValue(fingerprint.getFecha().toLocalDate());
+    public void setSelectedFingerPrint(Huella selectedFingerPrint) {
+        this.selectedFingerPrint = selectedFingerPrint;
+        activityComboBox.setValue(selectedFingerPrint.getIdActividad());
+        valueField.setText(selectedFingerPrint.getValor().toString());
+        datePicker.setValue(selectedFingerPrint.getFecha() != null ? selectedFingerPrint.getFecha().toLocalDate() : LocalDate.now());
     }
 
     @FXML
@@ -48,7 +48,10 @@ public class ModifyFingerprintsDialogController {
         LocalDate newDate = datePicker.getValue();
         String newUnit = selectedActivity.getIdCategoria().getUnidad();
 
-        fingerprintService.updateFingerPrintDetails(fingerprint, selectedActivity, newValue, newUnit);
+        // Convert LocalDate to LocalDateTime
+        LocalDateTime newDateTime = newDate.atStartOfDay();
+
+        fingerprintService.updateFingerPrintDetails(selectedFingerPrint, selectedActivity, newValue, newUnit, newDateTime);
         closeDialog();
     }
 

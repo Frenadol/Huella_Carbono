@@ -9,7 +9,7 @@ import java.util.List;
 
 public class ActivityDao {
     public List<Actividad> findAllWithCategories() {
-        Session session = Connection.getInstance().getSession();
+        Session session= Connection.getInstance().getSession();
         Query<Actividad> query = session.createQuery("SELECT a FROM Actividad a JOIN a.idCategoria", Actividad.class);
         return query.getResultList();
 

@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 public class CreateFingerprintController {
@@ -72,7 +73,7 @@ public class CreateFingerprintController {
             huella.setIdUsuario(Session.getInstance().getUserLogged());
             huella.setIdActividad(selectedActivity);
             huella.setValor(BigDecimal.valueOf(Double.parseDouble(value)));
-            huella.setFecha(LocalDateTime.now());
+            huella.setFecha(LocalDateTime.of(date, LocalTime.now()));
             huella.setUnidad(unit);
 
             fingerprintService.saveFingerprint(huella);
