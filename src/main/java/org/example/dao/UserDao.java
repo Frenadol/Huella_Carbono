@@ -4,6 +4,8 @@ import org.example.entities.Usuario;
 import org.example.utils.Connection;
 import org.hibernate.Session;
 
+import java.util.List;
+
 public class UserDao {
     private Connection connection = Connection.getInstance();
 
@@ -14,7 +16,31 @@ public class UserDao {
             session.getTransaction().commit();
         }
     }
+    public List<Object[]> getUserImpactByCategory(int userId) {
+        List<Object[]> results = null;
+        try (Session session = connection.getSession()) {
+            results = session.createQuery(
+                            "SELECT c.nombre, SUM(h.valor * c.factorEmision) " +
+                                    "FROM Huella h JOIN h.idActividad a JOIN a.idCategoria c " +
+                                    "WHERE h.idUsuario.id = :userId " +
+                                    "GROUP BY c.nombre", Object[].class)
+                    .setParameter("userId", userId)
+                    .list();
+        }
+        return results;
+    }
 
+    public List<Object[]> getAverageImpactByCategory() {
+        List<Object[]> results = null;
+        try (Session session = connection.getSession()) {
+            results = session.createQuery(
+                            "SELECT c.nombre, AVG(h.valor * c.factorEmision) " +
+                                    "FROM Huella h JOIN h.idActividad a JOIN a.idCategoria c " +
+                                    "GROUP BY c.nombre", Object[].class)
+                    .list();
+        }
+        return results;
+    }
     public Usuario findByEmail(String email) {
         Usuario usuario = null;
         try (Session session = connection.getSession()) {
@@ -45,6 +71,20 @@ public class UserDao {
                     .uniqueResult();
         }
         return usuario;
+    }
+    public List<Usuario> findAllUsers(){
+        List<Usuario> usuarios=null;
+        try(Session session=connection.getSession()){
+            usuarios=session.createQuery("FROM Usuario",Usuario.class).list();
+        }
+        return usuarios;
+    }
+    public List<String> findAllUsernames() {
+        List<String> usernames = null;
+        try (Session session = connection.getSession()) {
+            usernames = session.createQuery("SELECT nombre FROM Usuario", String.class).list();
+        }
+        return usernames;
     }
 
     public static UserDao build() {

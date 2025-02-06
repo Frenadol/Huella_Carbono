@@ -17,7 +17,7 @@ public class AlertsUtils {
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(content);
-        alert.showAndWait();
+
     }
 
     public static void showConfirmationAlert(String title, String content) {
@@ -25,6 +25,6 @@ public class AlertsUtils {
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(content);
-        alert.showAndWait();
+
     }
 }
