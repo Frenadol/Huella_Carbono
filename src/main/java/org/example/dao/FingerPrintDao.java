@@ -45,7 +45,7 @@ public class FingerPrintDao {
             query.setParameter("usuario", usuario);
             List<Huella> huellas = query.list();
             huellas.forEach(huella -> {
-                huella.getIdActividad().getIdCategoria().getFactorEmision(); // Force eager loading
+                huella.getIdActividad().getIdCategoria().getFactorEmision();
             });
             return huellas;
         }
@@ -71,6 +71,12 @@ public class FingerPrintDao {
             huella.setUnidad(nuevaUnidad);
             session.update(huella);
             session.getTransaction().commit();
+        }
+    }
+    public List<Huella> getAllFingerprints() {
+        try (Session session = Connection.getInstance().getSession()) {
+            Query<Huella> query = session.createQuery("FROM Huella", Huella.class);
+            return query.list();
         }
     }
 }

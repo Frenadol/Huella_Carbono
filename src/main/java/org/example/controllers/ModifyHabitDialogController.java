@@ -45,6 +45,9 @@ public class ModifyHabitDialogController {
     }
 
     private void configureDatePicker() {
+        if(startDatePicker == null) {
+            AlertsUtils.showErrorAlert("Error", "No has elegido ninguna fecha");
+        }
         startDatePicker.setDayCellFactory(picker -> new DateCell() {
             @Override
             public void updateItem(LocalDate date, boolean empty) {

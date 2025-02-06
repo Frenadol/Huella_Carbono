@@ -14,6 +14,7 @@ import javafx.stage.FileChooser;
 import org.example.entities.Recomendacion;
 import org.example.services.RecommendationService;
 import org.example.utils.AlertsUtils;
+import org.example.utils.PDFUtils;
 import org.example.utils.Session;
 
 import java.io.File;
@@ -58,19 +59,9 @@ public class RecommendationsDialogController {
             File file = fileChooser.showSaveDialog(recommendationTable.getScene().getWindow());
 
             if (file != null) {
-                Document document = new Document();
-                PdfWriter.getInstance(document, new FileOutputStream(file.getAbsolutePath()));
-                document.open();
-
-                for (Recomendacion recommendation : recommendations) {
-                    document.add(new Paragraph("Descripción: " + recommendation.getDescripcion()));
-                    document.add(new Paragraph("Impacto Estimado: " + recommendation.getImpactoEstimado()));
-                    document.add(new Paragraph("\n"));
-                }
-
-                document.close();
+                PDFUtils.generateRecommendationsPdf(recommendations, file.getAbsolutePath());
             }
-        } catch (FileNotFoundException | DocumentException e) {
+        } catch (Exception e) {
             AlertsUtils.showErrorAlert("Error", "Hubo un error al generar el PDF: " + e.getMessage());
         }
     }

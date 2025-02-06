@@ -48,7 +48,7 @@ public class LoginMenuController implements Initializable {
         if (user != null) {
             showAlert("Login exitoso.");
             Session.getInstance().setUser(user);
-            App.setRoot("mainMenu");
+            App.setRoot("MainMenu");
         } else {
             showAlert("Credenciales incorrectas. Inténtalo de nuevo.");
         }

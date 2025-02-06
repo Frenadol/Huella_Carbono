@@ -8,6 +8,7 @@ module org.example {
     requires java.sql;
     requires java.prefs;
     requires itextpdf;
+    requires org.apache.pdfbox;
 
     opens org.example to javafx.fxml;
     opens org.example.controllers to javafx.fxml;

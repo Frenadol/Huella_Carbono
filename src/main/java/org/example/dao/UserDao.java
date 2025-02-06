@@ -10,7 +10,7 @@ public class UserDao {
     public void insertNewUser(Usuario usuario) {
         try (Session session = connection.getSession()) {
             session.beginTransaction();
-            session.persist(usuario);
+            session.save(usuario);
             session.getTransaction().commit();
         }
     }

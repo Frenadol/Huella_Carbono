@@ -74,17 +74,17 @@ public class ModifyFingerprintsController {
                 FXMLLoader loader = new FXMLLoader(App.class.getResource("ModifyFingerprintDialog.fxml"));
                 Parent parent = loader.load();
                 ModifyFingerprintsDialogController controller = loader.getController();
-                controller.setFingerprint(fingerprint);
+                controller.setSelectedFingerPrint(fingerprint);
                 Stage stage = new Stage();
-                stage.setTitle("Modify Fingerprint");
+                stage.setTitle("Modificacion de Huella");
                 stage.setScene(new Scene(parent));
                 stage.showAndWait();
                 loadFingerprints();
             } catch (IOException e) {
-                AlertsUtils.showErrorAlert("Error", "Failed to load modify fingerprint dialog: " + e.getMessage());
+                AlertsUtils.showErrorAlert("Error", "Fallo al cargar la ventana: " + e.getMessage());
             }
         } else {
-            AlertsUtils.showErrorAlert("Error", "No fingerprint selected.");
+            AlertsUtils.showErrorAlert("Error", "No has seleccionado ninguna huella.");
         }
     }
 

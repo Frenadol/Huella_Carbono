@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controllers.MainMenuController">
    <children>
-      <Button layoutX="1072.0" layoutY="401.0" onMouseClicked="#createHabit" prefHeight="66.0" prefWidth="133.0" text="Crear Nuevo Hábito" />
-      <TableView fx:id="fingerprintTable" layoutX="1240.0" layoutY="370.0" prefHeight="377.0" prefWidth="510.0">
+      <Button layoutX="729.0" layoutY="475.0" onMouseClicked="#createHabit" prefHeight="66.0" prefWidth="133.0" text="Crear Nuevo Hábito" />
+      <TableView fx:id="fingerprintTable" layoutX="1198.0" layoutY="469.0" prefHeight="418.0" prefWidth="510.0">
          <columns>
             <TableColumn fx:id="activityColumn" prefWidth="128.800048828125" text="Actividad" />
             <TableColumn fx:id="valueColumn" prefWidth="128.800048828125" text="Valor" />
@@ -20,7 +22,7 @@
             <TableColumn fx:id="unitColumn" prefWidth="130.39990234375" text="Unidad" />
          </columns>
       </TableView>
-      <TableView fx:id="habitTable" layoutX="255.0" layoutY="345.0" prefHeight="464.0" prefWidth="434.0">
+      <TableView fx:id="habitTable" layoutX="294.0" layoutY="426.0" prefHeight="464.0" prefWidth="434.0">
          <columns>
             <TableColumn fx:id="habitActivityNameColumn" prefWidth="140.79999542236328" text="Nombre de la Actividad" />
             <TableColumn fx:id="habitFrecuenciaColumn" prefWidth="91.199951171875" text="Frecuencia" />
@@ -28,56 +30,65 @@
             <TableColumn fx:id="habitUltimaFechaColumn" minWidth="0.0" prefWidth="117.5999755859375" text="Última Fecha" />
          </columns>
       </TableView>
-      <Button layoutX="1071.0" layoutY="551.0" onAction="#createFingerPrint" prefHeight="51.0" prefWidth="134.0" text="Registrar Huella" />
-      <Text fill="#38c749" layoutX="1074.0" layoutY="534.0" strokeType="OUTSIDE" strokeWidth="0.0" text="HUELLAS">
+      <Button layoutX="1251.0" layoutY="403.0" onAction="#createFingerPrint" prefHeight="66.0" prefWidth="178.0" text="Registrar Huella" />
+      <Text fill="#38c749" layoutX="1388.0" layoutY="379.0" strokeType="OUTSIDE" strokeWidth="0.0" text="HUELLAS">
          <font>
             <Font size="22.0" />
          </font>
       </Text>
-      <Text layoutX="813.0" layoutY="529.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Impacto medioambiental" wrappingWidth="134.4000000000001" />
-      <Button layoutX="791.0" layoutY="551.0" mnemonicParsing="false" onMouseClicked="#showImpactCalculationDialog" prefHeight="51.0" prefWidth="194.0" text="Calcular impacto Medioambiental" />
-      <Button layoutX="791.0" layoutY="401.0" mnemonicParsing="false" onMouseClicked="#showRecommendationsDialog" prefHeight="66.0" prefWidth="178.0" text="Ver mis recomendaciones" />
-      <Text layoutX="288.0" layoutY="308.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Historial de hábitos registrados:" wrappingWidth="367.99996337890616">
+      <Text layoutX="751.0" layoutY="704.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Impacto medioambiental" wrappingWidth="134.4000000000001" />
+      <Button layoutX="728.0" layoutY="717.0" mnemonicParsing="false" onMouseClicked="#showImpactCalculationDialog" prefHeight="51.0" prefWidth="194.0" text="Calcular impacto Medioambiental" />
+      <Button layoutX="729.0" layoutY="605.0" mnemonicParsing="false" onMouseClicked="#showRecommendationsDialog" prefHeight="66.0" prefWidth="178.0" text="Ver mis recomendaciones" />
+      <Text layoutX="381.0" layoutY="338.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Historial de hábitos registrados:" wrappingWidth="367.99996337890616">
          <font>
             <Font size="16.0" />
          </font>
       </Text>
-      <Text layoutX="1095.0" layoutY="390.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Crear Habito" wrappingWidth="134.4000000000001" />
-      <Text layoutX="810.0" layoutY="390.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ver mis recomendaciones" wrappingWidth="178.40000000000003" />
-      <Text layoutX="798.0" layoutY="627.0" strokeType="OUTSIDE" strokeWidth="0.0" text="¿Desea cambiar alguna informacion de sus hábitos ya registrados?" textAlignment="CENTER" wrappingWidth="164.0634765625">
+      <Text layoutX="728.0" layoutY="449.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Crear Habito" wrappingWidth="134.4000000000001" />
+      <Text layoutX="725.0" layoutY="584.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ver mis recomendaciones" wrappingWidth="201.60001220703128" />
+      <Text layoutX="684.0" layoutY="370.0" strokeType="OUTSIDE" strokeWidth="0.0" text="¿Desea cambiar alguna informacion de sus hábitos ya registrados?" textAlignment="CENTER" wrappingWidth="164.0634765625">
          <font>
             <Font name="System Italic" size="15.0" />
          </font>
       </Text>
-      <ImageView fitHeight="40.0" fitWidth="32.0" layoutX="864.0" layoutY="674.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="40.0" fitWidth="32.0" layoutX="635.0" layoutY="369.0" pickOnBounds="true" preserveRatio="true" rotate="89.4">
          <image>
             <Image url="@Imagenes/TablerHandFingerDown.png" />
          </image>
       </ImageView>
-      <Button layoutX="764.0" layoutY="706.0" mnemonicParsing="false" onMouseClicked="#modifyHabit" prefHeight="66.0" prefWidth="248.0" text="Modificar hábitos registrados o borrarlos" textAlignment="CENTER">
+      <Button layoutX="387.0" layoutY="359.0" mnemonicParsing="false" onMouseClicked="#modifyHabit" prefHeight="66.0" prefWidth="248.0" text="Modificar hábitos registrados o borrarlos" textAlignment="CENTER">
          <font>
             <Font name="Britannic Bold" size="11.0" />
          </font>
       </Button>
-      <Text layoutX="1056.0" layoutY="625.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Aqui tienes opciones de cálculo mas precisas si lo necesitas" textAlignment="CENTER" wrappingWidth="164.0634765625">
-         <font>
-            <Font name="System Italic" size="15.0" />
-         </font>
-      </Text>
-      <ImageView fitHeight="40.0" fitWidth="32.0" layoutX="1122.0" layoutY="674.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@Imagenes/TablerHandFingerDown.png" />
-         </image>
-      </ImageView>
-      <Button layoutX="1016.0" layoutY="706.0" mnemonicParsing="false" onMouseClicked="#showAdvancedImpactCalculationDialog" prefHeight="66.0" prefWidth="223.0" text="Calculos azanzados" textAlignment="CENTER">
+      <Button layoutX="1432.0" layoutY="403.0" mnemonicParsing="false" onMouseClicked="#modifyFingerprint" prefHeight="66.0" prefWidth="223.0" text="Modificar datos de huella" textAlignment="CENTER">
          <font>
             <Font name="Britannic Bold" size="11.0" />
          </font>
       </Button>
-      <Button layoutX="1240.0" layoutY="291.0" mnemonicParsing="false" onMouseClicked="#modifyFingerprint" prefHeight="66.0" prefWidth="223.0" text="Modificar datos de huella" textAlignment="CENTER">
-         <font>
-            <Font name="Britannic Bold" size="11.0" />
-         </font>
-      </Button>
+      <AnchorPane layoutX="-100.0" layoutY="43.0" prefHeight="247.0" prefWidth="2020.0">
+         <children>
+            <Text layoutX="1075.0" layoutY="109.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Aqui tienes opciones de cálculo mas precisas si lo necesitas" textAlignment="CENTER" wrappingWidth="164.0634765625">
+               <font>
+                  <Font name="System Italic" size="15.0" />
+               </font>
+            </Text>
+            <ImageView fitHeight="51.0" fitWidth="57.0" layoutX="1011.0" layoutY="97.0" pickOnBounds="true" preserveRatio="true" rotate="-88.6">
+               <image>
+                  <Image url="@Imagenes/TablerHandFingerDown.png" />
+               </image>
+            </ImageView>
+            <ChoiceBox fx:id="calculationChoiceBox" layoutX="1082.0" layoutY="168.0" prefWidth="150.0" />
+            <VBox fx:id="chartContainer" layoutX="1260.0" layoutY="64.0" prefHeight="172.0" prefWidth="343.0" />
+            <TableView fx:id="comparisonTable" layoutX="606.0" layoutY="33.0" prefHeight="200.0" prefWidth="410.0">
+              <columns>
+                <TableColumn fx:id="categoryColumn" prefWidth="97.5999755859375" text="Categoría" />
+                <TableColumn fx:id="userImpactColumn" prefWidth="141.60003662109375" text="Impacto (KG de CO2)" />
+                  <TableColumn fx:id="averageImpactColumn" prefWidth="171.199951171875" text="Impacto Medio(KG de CO2)" />
+              </columns>
+            </TableView>
+         </children>
+      </AnchorPane>
+      <VBox fx:id="advancedImpactCalculationContainer" layoutX="935.0" layoutY="743.0" prefHeight="159.0" prefWidth="262.0" />
    </children>
 </AnchorPane>
