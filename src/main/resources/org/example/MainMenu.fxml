@@ -73,19 +73,18 @@
                   <Font name="System Italic" size="15.0" />
                </font>
             </Text>
-            <ImageView fitHeight="51.0" fitWidth="57.0" layoutX="1011.0" layoutY="97.0" pickOnBounds="true" preserveRatio="true" rotate="-88.6">
+            <ImageView fitHeight="51.0" fitWidth="53.0" layoutX="1130.0" layoutY="39.0" pickOnBounds="true" preserveRatio="true" rotate="0.6">
                <image>
                   <Image url="@Imagenes/TablerHandFingerDown.png" />
                </image>
             </ImageView>
             <ChoiceBox fx:id="calculationChoiceBox" layoutX="1082.0" layoutY="168.0" prefWidth="150.0" />
             <VBox fx:id="chartContainer" layoutX="1260.0" layoutY="64.0" prefHeight="172.0" prefWidth="343.0" />
-            <TableView fx:id="comparisonTable" layoutX="606.0" layoutY="33.0" prefHeight="200.0" prefWidth="410.0">
-              <columns>
-                <TableColumn fx:id="categoryColumn" prefWidth="97.5999755859375" text="Categoría" />
-                <TableColumn fx:id="userImpactColumn" prefWidth="141.60003662109375" text="Impacto (KG de CO2)" />
-                  <TableColumn fx:id="averageImpactColumn" prefWidth="171.199951171875" text="Impacto Medio(KG de CO2)" />
-              </columns>
+            <TableView fx:id="comparisonTable" layoutX="522.0" layoutY="39.0" prefHeight="200.0" prefWidth="494.0">
+               <columns>
+                  <TableColumn fx:id="comparisonUsernameColumn" prefWidth="255.0" text="Usuario" />
+                  <TableColumn fx:id="totalImpactColumn" prefWidth="255.0" text="Impacto Total (KG de CO2)" />
+               </columns>
             </TableView>
          </children>
       </AnchorPane>

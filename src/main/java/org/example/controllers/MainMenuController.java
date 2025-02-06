@@ -1,5 +1,6 @@
 package org.example.controllers;
 
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -17,19 +18,18 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.example.App;
-import org.example.entities.Categoria;
-import org.example.entities.Habito;
-import org.example.entities.Huella;
+import org.example.entities.*;
 import org.example.services.FingerprintService;
 import org.example.services.HabitService;
+import org.example.services.UserService;
 import org.example.utils.AlertsUtils;
 import org.example.utils.OperationsUtils;
 import org.example.utils.Session;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 
@@ -74,17 +74,26 @@ public class MainMenuController {
     @FXML
     private VBox chartContainer;
 
+    @FXML
+    private TableView<Usuario> comparisonTable;
+    @FXML
+    private TableColumn<Usuario, String> comparisonUsernameColumn;
+
+    @FXML
+    private TableColumn<Usuario, BigDecimal> totalImpactColumn;
+
     private final FingerprintService fingerprintService = new FingerprintService();
     private final HabitService habitService = new HabitService();
+    private final UserService userService = new UserService();
 
     @FXML
     public void initialize() {
-        calculationChoiceBox.setItems(FXCollections.observableArrayList("Mensual", "Semanal"));
-        calculationChoiceBox.setOnAction(event -> handleCalculationChoice());
         activityColumn.setCellValueFactory(new PropertyValueFactory<>("idActividad"));
         valueColumn.setCellValueFactory(new PropertyValueFactory<>("valor"));
         dateColumn.setCellValueFactory(new PropertyValueFactory<>("fecha"));
         unitColumn.setCellValueFactory(new PropertyValueFactory<>("unidad"));
+        calculationChoiceBox.setItems(FXCollections.observableArrayList("Mensual", "Semanal"));
+        calculationChoiceBox.setOnAction(event -> handleCalculationChoice());
         habitActivityNameColumn.setCellValueFactory(cellData -> {
             Habito habito = cellData.getValue();
             String activityName = habito.getIdActividad() != null ? habito.getIdActividad().getNombre() : null;
@@ -93,8 +102,26 @@ public class MainMenuController {
         habitFrecuenciaColumn.setCellValueFactory(new PropertyValueFactory<>("frecuencia"));
         habitTipoColumn.setCellValueFactory(new PropertyValueFactory<>("tipo"));
         habitUltimaFechaColumn.setCellValueFactory(new PropertyValueFactory<>("ultimaFecha"));
+        comparisonUsernameColumn.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+        totalImpactColumn.setCellValueFactory(cellData -> {
+            Usuario usuario = cellData.getValue();
+            BigDecimal impactoTotal = calculateImpactoTotal(usuario);
+            return new SimpleObjectProperty<>(impactoTotal);
+        });
         loadFingerprints();
         loadHabits();
+        loadUsernames();
+    }
+
+    private BigDecimal calculateImpactoTotal(Usuario usuario) {
+        List<Huella> huellas = fingerprintService.viewFingerPrints(usuario);
+        BigDecimal totalImpact = huellas.stream()
+                .map(huella -> {
+                    BigDecimal factorEmision = BigDecimal.valueOf(huella.getIdActividad().getIdCategoria().getFactorEmision());
+                    return huella.getValor().multiply(factorEmision);
+                })
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+        return totalImpact.setScale(2, RoundingMode.HALF_UP);
     }
 
     @FXML
@@ -114,7 +141,6 @@ public class MainMenuController {
             }
         }
     }
-
     private void loadFingerprints() {
         List<Huella> fingerprints = fingerprintService.viewFingerPrints(Session.getInstance().getUserLogged());
         if (fingerprints != null) {
@@ -128,6 +154,14 @@ public class MainMenuController {
         if (habits != null) {
             ObservableList<Habito> habitList = FXCollections.observableArrayList(habits);
             habitTable.setItems(habitList);
+        }
+    }
+
+    private void loadUsernames() {
+        List<Usuario> users = userService.getAllUsers();
+        if (users != null) {
+            ObservableList<Usuario> userList = FXCollections.observableArrayList(users);
+            comparisonTable.setItems(userList);
         }
     }
 

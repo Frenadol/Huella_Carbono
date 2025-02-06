@@ -73,6 +73,7 @@ public class FingerPrintDao {
             session.getTransaction().commit();
         }
     }
+
     public List<Huella> getAllFingerprints() {
         try (Session session = Connection.getInstance().getSession()) {
             Query<Huella> query = session.createQuery("FROM Huella", Huella.class);

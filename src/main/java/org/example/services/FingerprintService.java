@@ -7,12 +7,14 @@ import org.example.entities.Huella;
 import org.example.entities.Usuario;
 import org.example.utils.AlertsUtils;
 import org.example.utils.Connection;
+import org.example.utils.OperationsUtils;
 import org.example.utils.Session;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 public class FingerprintService {
 
@@ -50,6 +52,23 @@ public class FingerprintService {
     }
     public void deleteFingerPrint(Huella huella) {
         FingerPrintDao.build().deleteFingerPrint(huella);
+    }
+    public Map<String, BigDecimal> getUserCarbonFootprintByCategory(Usuario usuario) {
+        List<Huella> huellas = FingerPrintDao.build().viewFingerPrints(usuario);
+        return OperationsUtils.calculateImpactByCategory(huellas);
+    }
+
+    public Map<String, BigDecimal> getAverageCarbonFootprintByCategory() {
+        List<Huella> allHuellas = FingerPrintDao.build().getAllFingerprints();
+        return OperationsUtils.calculateAverageImpactByCategory(allHuellas);
+    }
+    public BigDecimal calculateTotalImpact() {
+        List<Huella> allFingerprints = FingerPrintDao.build().getAllFingerprints();
+        BigDecimal totalImpact = BigDecimal.ZERO;
+        for (Huella huella : allFingerprints) {
+            totalImpact = totalImpact.add(huella.getValor());
+        }
+        return totalImpact;
     }
 
     public void updateFingerPrintDetails(Huella huella, Actividad nuevaActividad, BigDecimal nuevoValor, String nuevaUnidad, LocalDateTime nuevaFecha) {

@@ -20,16 +20,22 @@ public class OperationsUtils {
 
     public static BigDecimal calculateImpactForAllFootprints(List<Huella> huellas) {
         BigDecimal totalImpact = BigDecimal.ZERO;
-
         for (Huella huella : huellas) {
             BigDecimal factorEmision = BigDecimal.valueOf(huella.getIdActividad().getIdCategoria().getFactorEmision());
             BigDecimal impacto = huella.getValor().multiply(factorEmision);
             totalImpact = totalImpact.add(impacto);
         }
-
         return totalImpact.setScale(2, RoundingMode.HALF_UP);
     }
-
+    public static Map<String, BigDecimal> calculateImpactByCategory(List<Huella> huellas) {
+        Map<String, BigDecimal> impactByCategory = new HashMap<>();
+        for (Huella huella : huellas) {
+            String category = huella.getIdActividad().getIdCategoria().getNombre();
+            BigDecimal valor = huella.getValor();
+            impactByCategory.put(category, impactByCategory.getOrDefault(category, BigDecimal.ZERO).add(valor));
+        }
+        return impactByCategory;
+    }
     public static BigDecimal calculateImpactForCategory(List<Huella> huellas, Categoria category) {
         BigDecimal totalImpact = BigDecimal.ZERO;
 
@@ -94,20 +100,26 @@ public class OperationsUtils {
 
         return totalImpact.setScale(2, RoundingMode.HALF_UP);
     }
+    public static Map<String, BigDecimal> calculateAverageImpactByCategory(List<Huella> allHuellas) {
+        Map<String, BigDecimal> totalImpactByCategory = new HashMap<>();
+        Map<String, Integer> countByCategory = new HashMap<>();
 
-    public static BigDecimal calculateDailyImpact(List<Huella> huellas) {
-        BigDecimal totalImpact = BigDecimal.ZERO;
-        LocalDate now = LocalDate.now();
-
-        for (Huella huella : huellas) {
-            if (huella.getFecha().isEqual(now.atStartOfDay())) {
-                BigDecimal factorEmision = BigDecimal.valueOf(huella.getIdActividad().getIdCategoria().getFactorEmision());
-                BigDecimal impacto = huella.getValor().multiply(factorEmision);
-                totalImpact = totalImpact.add(impacto);
-            }
+        for (Huella huella : allHuellas) {
+            String category = huella.getIdActividad().getIdCategoria().getNombre();
+            BigDecimal valor = huella.getValor();
+            totalImpactByCategory.put(category, totalImpactByCategory.getOrDefault(category, BigDecimal.ZERO).add(valor));
+            countByCategory.put(category, countByCategory.getOrDefault(category, 0) + 1);
         }
 
-        return totalImpact.setScale(2, RoundingMode.HALF_UP);
+        Map<String, BigDecimal> averageImpactByCategory = new HashMap<>();
+        for (Map.Entry<String, BigDecimal> entry : totalImpactByCategory.entrySet()) {
+            String category = entry.getKey();
+            BigDecimal totalImpact = entry.getValue();
+            int count = countByCategory.get(category);
+            averageImpactByCategory.put(category, totalImpact.divide(BigDecimal.valueOf(count), BigDecimal.ROUND_HALF_UP));
+        }
+
+        return averageImpactByCategory;
     }
 
     public static Map<Integer, BigDecimal> calculateWeeklyImpactMap(List<Huella> huellas) {
