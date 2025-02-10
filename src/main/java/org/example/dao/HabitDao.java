@@ -21,10 +21,16 @@ public class HabitDao {
      * @param habito the `Habito` entity to create.
      */
     public void createHabit(Habito habito) {
-        try (Session session = Connection.getInstance().getSession()) {
+        Session session = null;
+        try {
+            session = Connection.getInstance().getSession();
             session.beginTransaction();
             session.save(habito);
             session.getTransaction().commit();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
         }
     }
 
@@ -35,9 +41,15 @@ public class HabitDao {
      * @return true if the `Habito` entity exists, false otherwise.
      */
     public boolean exists(HabitoId habitoId) {
-        try (Session session = Connection.getInstance().getSession()) {
+        Session session = null;
+        try {
+            session = Connection.getInstance().getSession();
             Habito habito = session.get(Habito.class, habitoId);
             return habito != null;
+        } finally {
+            if (session != null) {
+                session.close();
+            }
         }
     }
 
@@ -48,14 +60,24 @@ public class HabitDao {
      * @return a list of `Habito` entities.
      */
     public List<Habito> getHabitsByUser(Usuario usuario) {
-        try (Session session = Connection.getInstance().getSession()) {
+        Session session = null;
+        List<Habito> userHabits = null;
+        try {
+            session = Connection.getInstance().getSession();
             session.beginTransaction();
-            Query<Habito> getHabitsByUserQuery = session.createQuery("From Habito where idUsuario=:usuario", Habito.class);
+            Query<Habito> getHabitsByUserQuery = session.createQuery(
+                    "FROM Habito h JOIN FETCH h.idActividad a JOIN FETCH a.idCategoria WHERE h.idUsuario = :usuario",
+                    Habito.class
+            );
             getHabitsByUserQuery.setParameter("usuario", usuario);
-            List<Habito> userHabits = getHabitsByUserQuery.list();
+            userHabits = getHabitsByUserQuery.list();
             session.getTransaction().commit();
-            return userHabits;
+        } finally {
+            if (session != null) {
+                session.close();
+            }
         }
+        return userHabits;
     }
 
     /**
@@ -73,10 +95,16 @@ public class HabitDao {
      * @param habit the `Habito` entity to update.
      */
     public void updateHabit(Habito habit) {
-        try (Session session = Connection.getInstance().getSession()) {
+        Session session = null;
+        try {
+            session = Connection.getInstance().getSession();
             session.beginTransaction();
             session.update(habit);
             session.getTransaction().commit();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
         }
     }
 
@@ -86,10 +114,16 @@ public class HabitDao {
      * @param habito the `Habito` entity to delete.
      */
     public void delete(Habito habito) {
-        try (Session session = Connection.getInstance().getSession()) {
+        Session session = null;
+        try {
+            session = Connection.getInstance().getSession();
             session.beginTransaction();
             session.delete(habito);
             session.getTransaction().commit();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
         }
     }
 }

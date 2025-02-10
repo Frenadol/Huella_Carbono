@@ -19,9 +19,18 @@ public class ActivityDao {
      * @return a list of `Actividad` entities with their categories.
      */
     public List<Actividad> findAllWithCategories() {
-        Session session = Connection.getInstance().getSession();
-        Query<Actividad> query = session.createQuery("SELECT a FROM Actividad a JOIN a.idCategoria", Actividad.class);
-        return query.getResultList();
+        Session session = null;
+        List<Actividad> actividades = null;
+        try {
+            session = Connection.getInstance().getSession();
+            Query<Actividad> query = session.createQuery("SELECT a FROM Actividad a JOIN a.idCategoria", Actividad.class);
+            actividades = query.getResultList();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return actividades;
     }
 
     /**

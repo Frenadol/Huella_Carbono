@@ -20,7 +20,7 @@ public class Actividad {
     @Column(name = "nombre", nullable = false, length = 80)
     private String nombre;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "id_categoria", nullable = false)
     private Categoria idCategoria;

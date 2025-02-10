@@ -21,8 +21,10 @@ public class RecommendationDao {
      * @return a list of `Recomendacion` entities.
      */
     public List<Recomendacion> getRecommendationsByUserId(int userId) {
+        Session session = null;
         List<Recomendacion> recommendations = null;
-        try (Session session = connection.getSession()) {
+        try {
+            session = connection.getSession();
             recommendations = session.createQuery(
                             "SELECT r FROM Recomendacion r " +
                                     "JOIN r.idCategoria c " +
@@ -31,6 +33,10 @@ public class RecommendationDao {
                                     "WHERE h.idUsuario.id = :userId", Recomendacion.class)
                     .setParameter("userId", userId)
                     .list();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
         }
         return recommendations;
     }

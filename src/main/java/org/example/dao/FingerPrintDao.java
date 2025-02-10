@@ -32,10 +32,16 @@ public class FingerPrintDao {
      * @param huella the `Huella` entity to save.
      */
     public void saveFingerPrint(Huella huella) {
-        try (Session session = Connection.getInstance().getSession()) {
+        Session session = null;
+        try {
+            session = Connection.getInstance().getSession();
             session.beginTransaction();
             session.save(huella);
             session.getTransaction().commit();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
         }
     }
 
@@ -45,10 +51,16 @@ public class FingerPrintDao {
      * @param huella the `Huella` entity to delete.
      */
     public void deleteFingerPrint(Huella huella) {
-        try (Session session = Connection.getInstance().getSession()) {
+        Session session = null;
+        try {
+            session = Connection.getInstance().getSession();
             session.beginTransaction();
             session.delete(huella);
             session.getTransaction().commit();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
         }
     }
 
@@ -62,7 +74,9 @@ public class FingerPrintDao {
      * @param nuevaFecha the new date to set.
      */
     public void updateFingerPrintDetails(Huella huella, Actividad nuevaActividad, BigDecimal nuevoValor, String nuevaUnidad, LocalDateTime nuevaFecha) {
-        try (Session session = Connection.getInstance().getSession()) {
+        Session session = null;
+        try {
+            session = Connection.getInstance().getSession();
             session.beginTransaction();
             huella.setIdActividad(nuevaActividad);
             huella.setValor(nuevoValor);
@@ -70,6 +84,10 @@ public class FingerPrintDao {
             huella.setFecha(nuevaFecha);
             session.update(huella);
             session.getTransaction().commit();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
         }
     }
 
@@ -80,13 +98,21 @@ public class FingerPrintDao {
      * @return a list of `Huella` entities.
      */
     public List<Huella> viewFingerPrints(Usuario usuario) {
-        try (Session session = Connection.getInstance().getSession()) {
+        Session session = null;
+        List<Huella> huellas = null;
+        try {
+            session = Connection.getInstance().getSession();
             Query<Huella> query = session.createQuery(
                     "FROM Huella h JOIN FETCH h.idActividad a JOIN FETCH a.idCategoria WHERE h.idUsuario = :usuario",
                     Huella.class
             );
             query.setParameter("usuario", usuario);
-            return query.list();
+            huellas = query.list();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
         }
+        return huellas;
     }
 }
