@@ -5,19 +5,49 @@
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controllers.CreateFingerprintController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: #98FB98;" stylesheets="@CSS/CreateFingerPrint.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controllers.CreateFingerprintController">
     <children>
-        <Label layoutX="960.0" layoutY="356.0" text="Actividades:" />
-        <ComboBox fx:id="activityComboBox" layoutX="960.0" layoutY="386.0" prefWidth="200.0" />
-        <Label layoutX="960.0" layoutY="426.0" text="Valor:" />
-        <TextField fx:id="valueField" layoutX="960.0" layoutY="446.0" prefWidth="200.0" />
-        <Label layoutX="960.0" layoutY="486.0" text="Fecha:" />
-        <DatePicker fx:id="datePicker" layoutX="960.0" layoutY="506.0" prefWidth="200.0" />
-        <Label layoutX="960.0" layoutY="546.0" text="Unidad:" />
-        <TextField fx:id="unitField" editable="false" layoutX="960.0" layoutY="566.0" prefWidth="200.0" />
-        <Button layoutX="923.0" layoutY="606.0" onAction="#registerFingerprint" text="Registrar Huella" />
-      <Button layoutX="1060.0" layoutY="606.0" mnemonicParsing="false" onMouseClicked="#goToMainMenu" text="Volver al menu anterior" />
+        <Label layoutX="908.0" layoutY="450.0" text="Actividades:" />
+        <ComboBox fx:id="activityComboBox" layoutX="908.0" layoutY="480.0" prefWidth="200.0" />
+        <Label layoutX="780.0" layoutY="543.0" text="Valor:" />
+        <TextField fx:id="valueField" layoutX="908.0" layoutY="540.0" prefWidth="200.0" />
+        <Label layoutX="778.0" layoutY="600.0" text="Fecha:" />
+        <DatePicker fx:id="datePicker" layoutX="908.0" layoutY="600.0" prefWidth="200.0" />
+        <Label layoutX="772.0" layoutY="663.0" text="Unidad:" />
+        <TextField fx:id="unitField" editable="false" layoutX="908.0" layoutY="660.0" prefWidth="200.0" />
+        <Button layoutX="832.0" layoutY="700.0" onAction="#registerFingerprint" prefHeight="41.0" prefWidth="167.0" text="Registrar Huella" />
+        <Button layoutX="1008.0" layoutY="700.0" mnemonicParsing="false" onMouseClicked="#goToMainMenu" text="Volver al menu anterior" />
+      <ImageView fitHeight="63.0" fitWidth="59.0" layoutX="832.0" layoutY="472.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Imagenes/BxsBookAlt.png" />
+         </image>
+      </ImageView>
+      <Text layoutX="802.0" layoutY="419.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rellene los campos para registrar una huella" wrappingWidth="411.2000488281251">
+         <font>
+            <Font name="Cooper Black" size="18.0" />
+         </font>
+      </Text>
+      <Label layoutX="750.0" layoutY="489.0" text="Actividad:" />
+      <ImageView fitHeight="63.0" fitWidth="59.0" layoutX="832.0" layoutY="527.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Imagenes/BxsCalculator.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="63.0" fitWidth="59.0" layoutX="832.0" layoutY="592.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Imagenes/BxsCalendar.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="49.0" fitWidth="59.0" layoutX="837.0" layoutY="651.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Imagenes/BxsSelectMultiple.png" />
+         </image>
+      </ImageView>
     </children>
 </AnchorPane>

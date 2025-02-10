@@ -9,6 +9,7 @@ module org.example {
     requires java.prefs;
     requires itextpdf;
     requires org.apache.pdfbox;
+    requires jbcrypt;
 
     opens org.example to javafx.fxml;
     opens org.example.controllers to javafx.fxml;
@@ -20,5 +21,9 @@ module org.example {
     exports org.example.controllers;
     exports org.example.testDao;
     opens org.example.testDao to javafx.fxml;
+    exports org.example.services;
+    opens org.example.services to org.hibernate.orm.core;
+    exports org.example.connection;
+    opens org.example.connection to org.hibernate.orm.core;
 
 }

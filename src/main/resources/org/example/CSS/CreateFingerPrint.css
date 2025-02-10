@@ -1,0 +1,59 @@
+/* CreateFingerPrint.css */
+
+/* Fondo verde pastel */
+AnchorPane {
+    -fx-background-color: #98FB98;
+}
+
+/* Estilo para las etiquetas */
+Label {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+}
+
+/* Estilo para los campos de texto, combo box y date picker */
+ComboBox, TextField, DatePicker {
+    -fx-font-size: 14px;
+    -fx-padding: 5px;
+    -fx-border-color: #ccc;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+
+/* Estilo para los botones */
+Button {
+    -fx-font-size: 14px;
+    -fx-background-color: linear-gradient(to bottom, #4CAF50, #388E3C); /* Gradiente verde */
+    -fx-text-fill: white; /* Color de texto blanco */
+    -fx-padding: 10px 20px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 5, 0, 0, 1);
+    -fx-opacity: 1;
+    -fx-transition: -fx-scale-x 0.2s ease-in-out, -fx-scale-y 0.2s ease-in-out;
+}
+
+Button:hover {
+    -fx-background-color: linear-gradient(to bottom, #66BB6A, #43A047); /* Gradiente verde más claro */
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.75), 15, 0.9, 0, 0);
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+}
+
+Button:pressed {
+    -fx-scale-x: 0.95;
+    -fx-scale-y: 0.95;
+}
+
+/* Keyframes para la animación de fade-in */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Aplicar animación de fade-in a todos los elementos */
+AnchorPane, Label, ComboBox, TextField, DatePicker, Button {
+    animation: fadeIn 0.3s ease-in-out forwards;
+}

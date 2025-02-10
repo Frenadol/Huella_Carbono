@@ -1,28 +1,49 @@
 package org.example.dao;
 
 import org.example.entities.Actividad;
-import org.example.entities.Categoria;
 import org.example.entities.Huella;
 import org.example.entities.Usuario;
-import org.example.utils.Connection;
+import org.example.connection.Connection;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ * Data Access Object (DAO) class for managing `Huella` entities.
+ * This class provides methods to interact with the database for `Huella` entities.
+ */
 public class FingerPrintDao {
+
+    /**
+     * Builds and returns an instance of `FingerPrintDao`.
+     *
+     * @return a new instance of `FingerPrintDao`.
+     */
     public static FingerPrintDao build() {
         return new FingerPrintDao();
     }
 
+    /**
+     * Saves a `Huella` entity to the database.
+     *
+     * @param huella the `Huella` entity to save.
+     */
     public void saveFingerPrint(Huella huella) {
-        Session session = Connection.getInstance().getSession();
-        session.beginTransaction();
-        session.save(huella);
-        session.getTransaction().commit();
+        try (Session session = Connection.getInstance().getSession()) {
+            session.beginTransaction();
+            session.save(huella);
+            session.getTransaction().commit();
+        }
     }
 
+    /**
+     * Deletes a `Huella` entity from the database.
+     *
+     * @param huella the `Huella` entity to delete.
+     */
     public void deleteFingerPrint(Huella huella) {
         try (Session session = Connection.getInstance().getSession()) {
             session.beginTransaction();
@@ -31,52 +52,40 @@ public class FingerPrintDao {
         }
     }
 
-    public void updateFingerPrint(Huella huella) {
-        try (Session session = Connection.getInstance().getSession()) {
-            session.beginTransaction();
-            session.update(huella);
-            session.getTransaction().commit();
-        }
-    }
-
-    public List<Huella> viewFingerPrints(Usuario usuario) {
-        try (Session session = Connection.getInstance().getSession()) {
-            Query<Huella> query = session.createQuery("FROM Huella WHERE idUsuario = :usuario", Huella.class);
-            query.setParameter("usuario", usuario);
-            List<Huella> huellas = query.list();
-            huellas.forEach(huella -> {
-                huella.getIdActividad().getIdCategoria().getFactorEmision();
-            });
-            return huellas;
-        }
-    }
-
-    public List<Huella> viewFingerPrintsByCategory(Usuario usuario, Categoria category) {
-        try (Session session = Connection.getInstance().getSession()) {
-            Query<Huella> query = session.createQuery("FROM Huella WHERE idUsuario = :usuario AND idActividad.idCategoria = :category", Huella.class);
-            query.setParameter("usuario", usuario);
-            query.setParameter("category", category);
-            List<Huella> huellas = query.list();
-            huellas.forEach(huella -> {
-                huella.getIdActividad().getIdCategoria().getFactorEmision(); // Force eager loading
-            });
-            return huellas;
-        }
-    }
-    public void updateFingerPrintDetails(Huella huella, Actividad nuevaActividad, BigDecimal nuevoValor, String nuevaUnidad) {
+    /**
+     * Updates the details of a `Huella` entity in the database.
+     *
+     * @param huella the `Huella` entity to update.
+     * @param nuevaActividad the new `Actividad` to set.
+     * @param nuevoValor the new value to set.
+     * @param nuevaUnidad the new unit to set.
+     * @param nuevaFecha the new date to set.
+     */
+    public void updateFingerPrintDetails(Huella huella, Actividad nuevaActividad, BigDecimal nuevoValor, String nuevaUnidad, LocalDateTime nuevaFecha) {
         try (Session session = Connection.getInstance().getSession()) {
             session.beginTransaction();
             huella.setIdActividad(nuevaActividad);
             huella.setValor(nuevoValor);
             huella.setUnidad(nuevaUnidad);
+            huella.setFecha(nuevaFecha);
             session.update(huella);
             session.getTransaction().commit();
         }
     }
 
-    public List<Huella> getAllFingerprints() {
+    /**
+     * Retrieves all `Huella` entities for a given user from the database.
+     *
+     * @param usuario the `Usuario` whose fingerprints to retrieve.
+     * @return a list of `Huella` entities.
+     */
+    public List<Huella> viewFingerPrints(Usuario usuario) {
         try (Session session = Connection.getInstance().getSession()) {
-            Query<Huella> query = session.createQuery("FROM Huella", Huella.class);
+            Query<Huella> query = session.createQuery(
+                    "FROM Huella h JOIN FETCH h.idActividad a JOIN FETCH a.idCategoria WHERE h.idUsuario = :usuario",
+                    Huella.class
+            );
+            query.setParameter("usuario", usuario);
             return query.list();
         }
     }

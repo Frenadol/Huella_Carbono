@@ -1,14 +1,24 @@
 package org.example.dao;
 
 import org.example.entities.Usuario;
-import org.example.utils.Connection;
+import org.example.connection.Connection;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 
 import java.util.List;
 
+/**
+ * Data Access Object (DAO) class for managing `Usuario` entities.
+ * This class provides methods to interact with the database for `Usuario` entities.
+ */
 public class UserDao {
     private Connection connection = Connection.getInstance();
 
+    /**
+     * Inserts a new `Usuario` entity into the database.
+     *
+     * @param usuario the `Usuario` entity to insert.
+     */
     public void insertNewUser(Usuario usuario) {
         try (Session session = connection.getSession()) {
             session.beginTransaction();
@@ -16,31 +26,13 @@ public class UserDao {
             session.getTransaction().commit();
         }
     }
-    public List<Object[]> getUserImpactByCategory(int userId) {
-        List<Object[]> results = null;
-        try (Session session = connection.getSession()) {
-            results = session.createQuery(
-                            "SELECT c.nombre, SUM(h.valor * c.factorEmision) " +
-                                    "FROM Huella h JOIN h.idActividad a JOIN a.idCategoria c " +
-                                    "WHERE h.idUsuario.id = :userId " +
-                                    "GROUP BY c.nombre", Object[].class)
-                    .setParameter("userId", userId)
-                    .list();
-        }
-        return results;
-    }
 
-    public List<Object[]> getAverageImpactByCategory() {
-        List<Object[]> results = null;
-        try (Session session = connection.getSession()) {
-            results = session.createQuery(
-                            "SELECT c.nombre, AVG(h.valor * c.factorEmision) " +
-                                    "FROM Huella h JOIN h.idActividad a JOIN a.idCategoria c " +
-                                    "GROUP BY c.nombre", Object[].class)
-                    .list();
-        }
-        return results;
-    }
+    /**
+     * Finds a `Usuario` entity by email.
+     *
+     * @param email the email to search for.
+     * @return the `Usuario` entity found, or null if not found.
+     */
     public Usuario findByEmail(String email) {
         Usuario usuario = null;
         try (Session session = connection.getSession()) {
@@ -51,6 +43,12 @@ public class UserDao {
         return usuario;
     }
 
+    /**
+     * Finds a `Usuario` entity by username.
+     *
+     * @param username the username to search for.
+     * @return the `Usuario` entity found, or null if not found.
+     */
     public Usuario findByUsername(String username) {
         Usuario usuario = null;
         try (Session session = connection.getSession()) {
@@ -61,32 +59,42 @@ public class UserDao {
         return usuario;
     }
 
-    public Usuario findUser(String username, String password, String email) {
+    /**
+     * Finds a `Usuario` entity by username and email.
+     *
+     * @param username the username to search for.
+     * @param email the email to search for.
+     * @return the `Usuario` entity found, or null if not found.
+     */
+    public Usuario findUser(String username, String email) {
         Usuario usuario = null;
         try (Session session = connection.getSession()) {
-            usuario = session.createQuery("FROM Usuario WHERE nombre=:nombre AND email=:email AND contraseña=:contraseña", Usuario.class)
+            usuario = session.createQuery("FROM Usuario WHERE nombre=:nombre AND email=:email", Usuario.class)
                     .setParameter("nombre", username)
                     .setParameter("email", email)
-                    .setParameter("contraseña", password)
                     .uniqueResult();
         }
         return usuario;
     }
-    public List<Usuario> findAllUsers(){
-        List<Usuario> usuarios=null;
-        try(Session session=connection.getSession()){
-            usuarios=session.createQuery("FROM Usuario",Usuario.class).list();
+
+    /**
+     * Retrieves all `Usuario` entities from the database.
+     *
+     * @return a list of `Usuario` entities.
+     */
+    public List<Usuario> findAllUsers() {
+        List<Usuario> usuarios = null;
+        try (Session session = connection.getSession()) {
+            usuarios = session.createQuery("FROM Usuario", Usuario.class).list();
         }
         return usuarios;
     }
-    public List<String> findAllUsernames() {
-        List<String> usernames = null;
-        try (Session session = connection.getSession()) {
-            usernames = session.createQuery("SELECT nombre FROM Usuario", String.class).list();
-        }
-        return usernames;
-    }
 
+    /**
+     * Builds and returns an instance of `UserDao`.
+     *
+     * @return a new instance of `UserDao`.
+     */
     public static UserDao build() {
         return new UserDao();
     }

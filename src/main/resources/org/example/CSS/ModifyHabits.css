@@ -1,0 +1,32 @@
+/* ModifyHabits.css */
+
+.root {
+    -fx-background-color: #98FB98;
+}
+
+.table-view {
+    -fx-font-size: 14px;
+}
+
+.table-column {
+    -fx-alignment: CENTER;
+}
+
+.button {
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-padding: 10px 20px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+
+.button:hover {
+    -fx-background-color: #45a049;
+}
+
+.text {
+    -fx-font-family: "Book Antiqua Italic";
+    -fx-font-size: 21px;
+    -fx-fill: #000000;
+}

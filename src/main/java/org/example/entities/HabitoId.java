@@ -7,7 +7,7 @@ import org.hibernate.Hibernate;
 import java.util.Objects;
 
 @Embeddable
-public class HabitoId implements java.io.Serializable {
+public class HabitoId  {
     private static final long serialVersionUID = 8506866069591608259L;
     @Column(name = "id_usuario", nullable = false)
     private Integer idUsuario;

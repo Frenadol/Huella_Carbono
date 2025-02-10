@@ -1,6 +1,4 @@
-package org.example.utils;
-
-import org.example.entities.Usuario;
+package org.example.entities;
 
 public class Session {
     private static Session _instance;
@@ -29,9 +27,6 @@ public class Session {
     }
     public int getUserId(){
         return userLogged.getId();
-    }
-    public void logOut(){
-        userLogged=null;
     }
 
     public void setUser(Usuario user) {

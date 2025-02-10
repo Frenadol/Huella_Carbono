@@ -1,0 +1,58 @@
+/* Fondo verde pastel */
+.anchor-pane {
+    -fx-background-color: #98FB98;
+}
+
+/* Estilo para el título */
+#titleText {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-fill: #2E7D32; /* Color verde oscuro */
+}
+
+/* Estilo para los ComboBox */
+.combo-box {
+    -fx-font-size: 14px;
+    -fx-padding: 5px;
+    -fx-background-color: #FFFFFF; /* Fondo blanco */
+    -fx-border-color: #4CAF50; /* Borde verde */
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+
+/* Estilo para el DatePicker */
+.date-picker {
+    -fx-font-size: 14px;
+    -fx-padding: 5px;
+    -fx-background-color: #FFFFFF; /* Fondo blanco */
+    -fx-border-color: #4CAF50; /* Borde verde */
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+
+/* Estilo para los botones */
+.button {
+    -fx-background-color: linear-gradient(to bottom, #4CAF50, #388E3C); /* Gradiente verde */
+    -fx-text-fill: white; /* Color de texto blanco */
+    -fx-font-size: 16px;
+    -fx-padding: 10px 20px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 5, 0, 0, 1);
+    -fx-opacity: 1;
+    -fx-transition: -fx-scale-x 0.2s ease-in-out, -fx-scale-y 0.2s ease-in-out;
+}
+
+.button:hover {
+    -fx-background-color: linear-gradient(to bottom, #66BB6A, #43A047); /* Gradiente verde más claro */
+    -fx-text-fill: white; /* Color de texto blanco */
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.75), 15, 0.9, 0, 0);
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+}
+
+.button:pressed {
+    -fx-text-fill: white; /* Color de texto blanco */
+    -fx-scale-x: 0.95;
+    -fx-scale-y: 0.95;
+}
