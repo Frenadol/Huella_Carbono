@@ -2,6 +2,7 @@ package org.example.dao;
 
 import org.example.entities.Categoria;
 import org.example.connection.Connection;
+import org.hibernate.Session;
 import org.hibernate.query.Query;
 
 import java.util.List;
@@ -18,8 +19,17 @@ public class CategoryDao {
      * @return a list of `Categoria` entities.
      */
     public List<Categoria> findAllCategories() {
-        Query<Categoria> findAllActivities = Connection.getInstance().getSession().createQuery("FROM Categoria", Categoria.class);
-        List<Categoria> categories = findAllActivities.list();
+        Session session = null;
+        List<Categoria> categories = null;
+        try {
+            session = Connection.getInstance().getSession();
+            Query<Categoria> findAllActivities = session.createQuery("FROM Categoria", Categoria.class);
+            categories = findAllActivities.list();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
         return categories;
     }
 

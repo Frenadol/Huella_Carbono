@@ -27,7 +27,7 @@ public class Categoria {
     private List<Actividad> actividades = new ArrayList<>();
 
     @OneToMany(mappedBy = "idCategoria")
-    private List<Recomendacion> recomendaciones =new ArrayList<>();
+    private List<Recomendacion> recomendaciones = new ArrayList<>();
 
     public Integer getId() {
         return id;
@@ -77,8 +77,4 @@ public class Categoria {
         this.recomendaciones = recomendaciones;
     }
 
-    @Override
-    public String toString() {
-        return ""+ nombre;
-    }
 }

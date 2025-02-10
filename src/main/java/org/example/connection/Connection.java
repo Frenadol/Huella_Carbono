@@ -5,11 +5,18 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 public class Connection {
+
     private static Connection instance;
     private SessionFactory sessionFactory;
 
     private Connection() {
-        sessionFactory = new Configuration().configure().buildSessionFactory();
+        try {
+
+            sessionFactory = new Configuration().configure().buildSessionFactory();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error al construir la SessionFactory", e);
+        }
     }
 
     public static  Connection getInstance() {
@@ -23,8 +30,8 @@ public class Connection {
         return sessionFactory.openSession();
     }
 
-    public void close() {
-        if (sessionFactory != null) {
+    public  void close() {
+        if (sessionFactory != null && !sessionFactory.isClosed()) {
             sessionFactory.close();
         }
     }

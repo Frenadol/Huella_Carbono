@@ -12,7 +12,7 @@ public class Recomendacion {
     @Column(name = "id_recomendacion", nullable = false)
     private Integer id;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "id_categoria", nullable = false)
     private Categoria idCategoria;
