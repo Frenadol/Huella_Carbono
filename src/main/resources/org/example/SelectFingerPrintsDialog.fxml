@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controllers.SelectFingerPrintsDialogController">
+<VBox xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controllers.SelectFingerPrintsDialogController" style="-fx-background-color: #98FB98;" stylesheets="CSS/SelectFingerPrintsDialog.css">
     <TableView fx:id="fingerprintTable" prefHeight="200.0" prefWidth="400.0">
         <columns>
             <TableColumn fx:id="activityColumn" text="Actividad" />
@@ -19,20 +19,21 @@
             <TableColumn fx:id="unitColumn" prefWidth="159.20001220703125" text="Unidad" />
         </columns>
     </TableView>
-   <AnchorPane prefHeight="116.0" prefWidth="267.0">
-      <children>
-          <Button layoutX="6.0" layoutY="1.0" onAction="#calculateImpact" text="Calcular impacto" />
-         <ImageView fitHeight="117.0" fitWidth="116.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
-            <image>
-               <Image url="@Imagenes/Warning.png" />
-            </image>
-         </ImageView>
-         <Text layoutX="121.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Para seleccionar varias huellas manten la tecla ctrl+ click y selecciona las huellas deseadas para realizar su cálculo" textAlignment="CENTER" wrappingWidth="233.19342041015625">
-            <font>
-               <Font name="System Italic" size="15.0" />
-            </font>
-         </Text>
-         <Button layoutX="341.0" layoutY="2.0" mnemonicParsing="false" onMouseClicked="#selectAllFingerPrints" text="Seleccionar todas las huellas" />
-      </children>
-   </AnchorPane>
+    <AnchorPane prefHeight="116.0" prefWidth="267.0">
+        <children>
+            <Button layoutX="6.0" layoutY="1.0" onAction="#calculateImpact" text="Calcular impacto" />
+            <ImageView fitHeight="117.0" fitWidth="116.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                <image>
+                    <Image url="@Imagenes/Warning.png" />
+                </image>
+            </ImageView>
+            <Text layoutX="121.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Para seleccionar varias huellas manten la tecla ctrl+ click y selecciona las huellas deseadas para realizar su cálculo" textAlignment="CENTER" wrappingWidth="233.19342041015625">
+                <font>
+                    <Font name="System Italic" size="15.0" />
+                </font>
+            </Text>
+            <Button layoutX="341.0" layoutY="2.0" mnemonicParsing="false" onMouseClicked="#selectAllFingerPrints" text="Seleccionar todas las huellas" />
+        </children>
+    </AnchorPane>
+    <VBox fx:id="advancedImpactCalculationContainer" prefHeight="200.0" prefWidth="400.0"/>
 </VBox>

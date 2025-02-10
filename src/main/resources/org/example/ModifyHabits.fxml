@@ -7,22 +7,22 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controllers.ModifyHabitsController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: #98FB98;" stylesheets="@CSS/ModifyHabits.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controllers.ModifyHabitsController">
    <children>
-      <TableView fx:id="habitTable" layoutX="767.0" layoutY="323.0" prefHeight="270.0" prefWidth="386.0">
+      <TableView fx:id="habitTable" layoutX="748.0" layoutY="299.0" prefHeight="290.0" prefWidth="464.0">
         <columns>
-          <TableColumn fx:id="habitNameColumn" prefWidth="150.4000244140625" text="Nombre de la actividad" />
-          <TableColumn fx:id="habitFrequencyColumn" prefWidth="121.5999755859375" text="Frecuencia" />
-            <TableColumn fx:id="habitTypeColumn" prefWidth="113.60001220703123" text="Tipo" />
+          <TableColumn fx:id="habitNameColumn" prefWidth="236.0" text="Nombre de la actividad" />
+          <TableColumn fx:id="habitFrequencyColumn" prefWidth="117.59991455078125" text="Frecuencia" />
+            <TableColumn fx:id="habitTypeColumn" prefWidth="109.5999755859375" text="Tipo" />
         </columns>
       </TableView>
-      <Button layoutX="767.0" layoutY="593.0" mnemonicParsing="false" onMouseClicked="#modifyHabit" prefHeight="54.0" prefWidth="174.0" text="Modificar hábito registrado" />
-      <Button layoutX="970.0" layoutY="593.0" mnemonicParsing="false" onMouseClicked="#deleteHabit" prefHeight="54.0" prefWidth="182.0" text="Borrar hábitos registrados" />
+      <Button layoutX="591.0" layoutY="593.0" mnemonicParsing="false" onMouseClicked="#modifyHabit" prefHeight="54.0" prefWidth="350.0" text="Modificar hábito registrado" />
+      <Button layoutX="970.0" layoutY="593.0" mnemonicParsing="false" onMouseClicked="#deleteHabit" prefHeight="54.0" prefWidth="350.0" text="Borrar hábitos registrados" />
       <Text layoutX="826.0" layoutY="294.0" strokeType="OUTSIDE" strokeWidth="0.0" text="¿Que operacion desea realizar?">
          <font>
             <Font name="Book Antiqua Italic" size="21.0" />
          </font>
       </Text>
-      <Button layoutX="888.0" layoutY="663.0" mnemonicParsing="false" onMouseClicked="#goToMainMenu" text="Volver al menu anterior" />
+      <Button layoutX="818.0" layoutY="663.0" mnemonicParsing="false" onMouseClicked="#goToMainMenu" text="Volver al menu anterior" />
    </children>
 </AnchorPane>

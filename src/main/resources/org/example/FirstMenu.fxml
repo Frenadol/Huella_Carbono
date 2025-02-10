@@ -7,26 +7,15 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@CSS/FirstMenu.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controllers.FirstMenuController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: #98FB98;" stylesheets="@CSS/FirstMenu.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controllers.FirstMenuController">
     <children>
-        <Text layoutX="839.0" layoutY="415.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Bienvenido" textAlignment="CENTER" wrappingWidth="241.5999755859375">
+        <Text layoutX="825.0" layoutY="398.0" strokeType="OUTSIDE" strokeWidth="0.0" text="¡Bienvenido a Ecometrix!" textAlignment="CENTER" wrappingWidth="273.5998779296875">
             <font>
                 <Font name="Times New Roman Bold" size="28.0" />
             </font>
-            <AnchorPane.topAnchor>389.1015625</AnchorPane.topAnchor>
-            <AnchorPane.leftAnchor>839.0</AnchorPane.leftAnchor>
-            <AnchorPane.rightAnchor>839.4000244140625</AnchorPane.rightAnchor>
         </Text>
-        <Button layoutX="763.0" layoutY="456.0" mnemonicParsing="false" onAction="#goToLogin" prefHeight="26.0" prefWidth="394.0" styleClass="custom-button" text="Iniciar Sesión">
-            <AnchorPane.topAnchor>456.0</AnchorPane.topAnchor>
-            <AnchorPane.leftAnchor>763.0</AnchorPane.leftAnchor>
-            <AnchorPane.rightAnchor>763.4000000000001</AnchorPane.rightAnchor>
-        </Button>
-        <Button layoutX="768.8" layoutY="596.0" mnemonicParsing="false" onAction="#goToRegister" prefHeight="42.0" prefWidth="387.0" styleClass="custom-button" text="Registrarse">
-            <AnchorPane.topAnchor>596.0</AnchorPane.topAnchor>
-            <AnchorPane.leftAnchor>769.0</AnchorPane.leftAnchor>
-            <AnchorPane.rightAnchor>764.0</AnchorPane.rightAnchor>
-        </Button>
+        <Button layoutX="763.0" layoutY="456.0" mnemonicParsing="false" onAction="#goToLogin" prefHeight="26.0" prefWidth="394.0" styleClass="custom-button" text="Iniciar Sesión" />
+        <Button layoutX="768.8" layoutY="596.0" mnemonicParsing="false" onAction="#goToRegister" prefHeight="42.0" prefWidth="387.0" styleClass="custom-button" text="Registrarse" />
         <AnchorPane layoutX="10.0" layoutY="18.0" prefHeight="1072.0" prefWidth="646.0">
             <children>
                 <ImageView fitHeight="272.0" fitWidth="296.0" layoutX="344.0" layoutY="341.0">
@@ -34,7 +23,8 @@
                         <Image url="@Imagenes/logo.png" />
                     </image>
                 </ImageView>
-            </children></AnchorPane>
+            </children>
+        </AnchorPane>
         <AnchorPane layoutX="1422.0" layoutY="3.0" prefHeight="1080.0" prefWidth="498.0" />
         <ImageView fitHeight="272.0" fitWidth="296.0" layoutX="1214.0" layoutY="357.0">
             <image>
@@ -46,7 +36,7 @@
                 <Image url="@Imagenes/MdiAccountGroup.png" />
             </image>
         </ImageView>
-        <Text layoutX="754.0" layoutY="550.0" strokeType="OUTSIDE" strokeWidth="0.0" text="¿No tienes cuenta registrada todavia, registrate aqui?: ">
+        <Text layoutX="754.0" layoutY="550.0" strokeType="OUTSIDE" strokeWidth="0.0" text="¿No tienes cuenta registrada todavía, regístrate aquí?: ">
             <font>
                 <Font name="Times New Roman" size="18.0" />
             </font>
@@ -56,10 +46,10 @@
                 <Image url="@Imagenes/TablerHandFingerDown.png" />
             </image>
         </ImageView>
-      <ImageView fitHeight="42.0" fitWidth="49.0" layoutX="775.0" layoutY="600.0">
-         <image>
-            <Image url="@Imagenes/MdiAccountCircle.png" />
-         </image>
-      </ImageView>
+        <ImageView fitHeight="42.0" fitWidth="49.0" layoutX="775.0" layoutY="600.0">
+            <image>
+                <Image url="@Imagenes/MdiAccountCircle.png" />
+            </image>
+        </ImageView>
     </children>
 </AnchorPane>
