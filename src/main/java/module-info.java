@@ -19,11 +19,13 @@ module org.example {
     exports org.example.utils;
     exports org.example.dao;
     exports org.example.controllers;
-    exports org.example.testDao;
-    opens org.example.testDao to javafx.fxml;
+    exports org.example.tests;
+    opens org.example.tests to javafx.fxml;
     exports org.example.services;
     opens org.example.services to org.hibernate.orm.core;
     exports org.example.connection;
     opens org.example.connection to org.hibernate.orm.core;
+    exports org.example.views;
+    opens org.example.views to javafx.fxml;
 
 }
