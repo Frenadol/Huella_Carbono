@@ -2,7 +2,9 @@ package org.example.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
+import javafx.util.Callback;
 import org.example.App;
 import org.example.entities.Actividad;
 import org.example.entities.Habito;
@@ -59,6 +61,7 @@ public class CreateHabitController {
         loadActivities();
         loadFrequencyOptions();
         loadTypeOptions();
+        restrictFutureDates();
     }
 
     /**
@@ -89,6 +92,28 @@ public class CreateHabitController {
     }
 
     /**
+     * Restricts the DatePicker to not allow future dates.
+     */
+    private void restrictFutureDates() {
+        final Callback<DatePicker, DateCell> dayCellFactory = new Callback<>() {
+            @Override
+            public DateCell call(final DatePicker datePicker) {
+                return new DateCell() {
+                    @Override
+                    public void updateItem(LocalDate item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (item.isAfter(LocalDate.now())) {
+                            setDisable(true);
+                            setStyle("-fx-background-color: #ffc0cb;");
+                        }
+                    }
+                };
+            }
+        };
+        startDatePicker.setDayCellFactory(dayCellFactory);
+    }
+
+    /**
      * Registers a new habit based on the selected activity, frequency, type, and start date.
      * Validates the input fields and shows error alerts if necessary.
      * Saves the habit if all fields are valid.
@@ -101,7 +126,12 @@ public class CreateHabitController {
         LocalDate startDate = startDatePicker.getValue();
 
         if (selectedActivity == null || frequency == null || type == null || startDate == null) {
-            showAlert("Error", "Todos los campos son obligatorios.");
+            AlertsUtils.showErrorAlert("Error", "Todos los campos son obligatorios.");
+            return;
+        }
+
+        if (startDate.isAfter(LocalDate.now())) {
+            AlertsUtils.showErrorAlert("Error", "La fecha de inicio no puede ser una fecha futura.");
             return;
         }
 
@@ -125,17 +155,8 @@ public class CreateHabitController {
         newHabito.setUltimaFecha(LocalDateTime.now());
 
         if (habitService.insertHabit(newHabito)) {
-            showAlert("Éxito", "Hábito registrado correctamente.");
+            AlertsUtils.showAlert("Éxito", "Hábito registrado correctamente.");
         }
-    }
-
-    /**
-     * Shows an alert with the given title and message.
-     * @param title the title of the alert
-     * @param message the message of the alert
-     */
-    private void showAlert(String title, String message) {
-        AlertsUtils.showAlert(title, message);
     }
 
     /**
