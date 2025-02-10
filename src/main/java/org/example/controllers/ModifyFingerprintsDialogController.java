@@ -1,5 +1,6 @@
 package org.example.controllers;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
@@ -10,6 +11,7 @@ import org.example.entities.Actividad;
 import org.example.entities.Huella;
 import org.example.services.FingerprintService;
 import org.example.services.ActivityService;
+import org.example.utils.AlertsUtils;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -86,8 +88,15 @@ public class ModifyFingerprintsDialogController {
     @FXML
     public void saveChanges() {
         Actividad selectedActivity = activityComboBox.getValue();
-        BigDecimal newValue = new BigDecimal(valueField.getText());
+        String valueText = valueField.getText();
         LocalDate newDate = datePicker.getValue();
+
+        if (selectedActivity == null || valueText == null || valueText.isEmpty() || newDate == null) {
+            AlertsUtils.showErrorAlert("Error", "Todos los campos deben estar completos.");
+            return;
+        }
+
+        BigDecimal newValue = new BigDecimal(valueText);
         String newUnit = selectedActivity.getIdCategoria().getUnidad();
         LocalDateTime newDateTime = newDate.atStartOfDay();
         fingerprintService.updateFingerPrintDetails(selectedFingerPrint, selectedActivity, newValue, newUnit, newDateTime);
@@ -104,12 +113,9 @@ public class ModifyFingerprintsDialogController {
     @FXML
     public void deleteFingerPrint() {
         fingerprintService.deleteFingerPrint(selectedFingerPrint);
-        if (mainMenuController != null) {
-            mainMenuController.refreshTable();
-        }
+        Platform.runLater(() -> mainMenuController.loadFingerprints());
         closeDialog();
     }
-
     /**
      * Closes the dialog.
      * This method is triggered by a user action and closes the current stage.

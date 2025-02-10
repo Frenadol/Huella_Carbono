@@ -40,6 +40,7 @@ public class MainMenuController {
     @FXML
     private ImageView helpCalculationHabits;
 
+
     @FXML
     private ImageView helpHabits;
 
@@ -149,13 +150,11 @@ public class MainMenuController {
             }
         }
     }
-
+    @FXML
     public void loadFingerprints() {
         List<Huella> fingerprints = fingerprintService.viewFingerPrints(Session.getInstance().getUserLogged());
-        if (fingerprints != null && !fingerprints.isEmpty()) {
-            ObservableList<Huella> fingerprintList = FXCollections.observableArrayList(fingerprints);
-            fingerprintTable.setItems(fingerprintList);
-        }
+        ObservableList<Huella> fingerprintList = FXCollections.observableArrayList(fingerprints);
+        fingerprintTable.setItems(fingerprintList);
     }
 
     private void loadHabits() {
@@ -221,6 +220,7 @@ public class MainMenuController {
     private void calculateImpactForAllFootprints() {
         List<Huella> huellas = fingerprintService.viewFingerPrints(Session.getInstance().getUserLogged());
         if (huellas == null || huellas.isEmpty()) {
+            AlertsUtils.showErrorAlert("Error", "No hay huellas para calcular el impacto.");
             return;
         }
         try {
@@ -235,6 +235,7 @@ public class MainMenuController {
     private void calculateImpactForAllCategories() {
         List<Huella> huellas = fingerprintService.viewFingerPrints(Session.getInstance().getUserLogged());
         if (huellas == null || huellas.isEmpty()) {
+            AlertsUtils.showErrorAlert("Error", "No hay huellas para calcular el impacto.");
             return;
         }
         try {
@@ -248,6 +249,7 @@ public class MainMenuController {
     private void calculateMonthlyImpact() {
         List<Huella> huellas = fingerprintService.viewFingerPrints(Session.getInstance().getUserLogged());
         if (huellas == null || huellas.isEmpty()) {
+            AlertsUtils.showErrorAlert("Error", "No hay huellas para calcular el impacto.");
             return;
         }
         try {
@@ -262,6 +264,7 @@ public class MainMenuController {
     private void calculateWeeklyImpact() {
         List<Huella> huellas = fingerprintService.viewFingerPrints(Session.getInstance().getUserLogged());
         if (huellas == null || huellas.isEmpty()) {
+            AlertsUtils.showErrorAlert("Error", "No hay huellas para calcular el impacto.");
             return;
         }
         try {
@@ -321,6 +324,8 @@ public class MainMenuController {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }else{
+            showAlert("Error", "Seleccione una huella para modificar.");
         }
     }
 
@@ -333,6 +338,8 @@ public class MainMenuController {
             alert.showAndWait();
         });
     }
+
+    @FXML
     public void refreshTable() {
         loadFingerprints();
     }

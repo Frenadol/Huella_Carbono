@@ -75,6 +75,9 @@ public class SelectFingerPrintsDialogController {
             ObservableList<Huella> fingerprintList = FXCollections.observableArrayList(fingerprints);
             fingerprintTable.setItems(fingerprintList);
         }
+        else {
+
+        }
     }
 
     /**
@@ -85,6 +88,10 @@ public class SelectFingerPrintsDialogController {
     public void calculateImpact() {
         ObservableList<Huella> selectedFingerprints = fingerprintTable.getSelectionModel().getSelectedItems();
         BigDecimal totalImpact = BigDecimal.ZERO;
+        if(selectedFingerprints==null || selectedFingerprints.isEmpty()){
+            AlertsUtils.showErrorAlert("No hay huellas seleccionadas", "Por favor seleccione al menos una huella para calcular el impacto medioambiental");
+            return;
+        }
 
         for (Huella huella : selectedFingerprints) {
             BigDecimal factorEmision = BigDecimal.valueOf(huella.getIdActividad().getIdCategoria().getFactorEmision());
