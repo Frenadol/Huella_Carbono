@@ -1,4 +1,4 @@
-package org.example.controllers;
+package org.example.views;
 
 import javafx.application.Platform;
 import javafx.beans.property.SimpleObjectProperty;
@@ -15,6 +15,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.example.App;
+import org.example.controllers.ModifyFingerprintsDialogController;
 import org.example.entities.*;
 import org.example.services.FingerprintService;
 import org.example.services.HabitService;

@@ -1,4 +1,4 @@
-package org.example.testDao;
+package org.example.tests;
 
 import org.example.connection.Connection;
 import org.hibernate.Session;

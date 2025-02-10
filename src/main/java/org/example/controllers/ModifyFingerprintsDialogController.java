@@ -12,6 +12,7 @@ import org.example.entities.Huella;
 import org.example.services.FingerprintService;
 import org.example.services.ActivityService;
 import org.example.utils.AlertsUtils;
+import org.example.views.MainMenuController;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

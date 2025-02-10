@@ -7,7 +7,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: #98FB98;" stylesheets="@CSS/FirstMenu.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controllers.FirstMenuController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: #98FB98;" stylesheets="@CSS/FirstMenu.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.views.FirstMenuController">
     <children>
         <Text layoutX="825.0" layoutY="398.0" strokeType="OUTSIDE" strokeWidth="0.0" text="¡Bienvenido a Ecometrix!" textAlignment="CENTER" wrappingWidth="273.5998779296875">
             <font>
